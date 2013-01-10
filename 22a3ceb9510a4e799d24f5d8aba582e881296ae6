@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAcn///KY\u003d",
+        "filename": "overlay/frameworks/base/core/res/res/values/config.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1576
+      },
+      "writtenOn": "2013-01-10T07:29:17Z",
+      "side": 1,
+      "message": "we should change this to be 2000, not 9000, that is just craziness !",
+      "revId": "22a3ceb9510a4e799d24f5d8aba582e881296ae6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
