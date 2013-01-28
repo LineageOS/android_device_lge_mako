@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAc3//9YU\u003d",
+        "filename": "MakoParts/res/layout/preference_dialog_vibrator_tuning.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 4884
+      },
+      "writtenOn": "2013-01-28T19:46:33Z",
+      "side": 1,
+      "message": "tab + whitespces",
+      "revId": "1a19df546b4c32025dd84b64b5ce17714ccf0f79",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAc3//9YQ\u003d",
+        "filename": "MakoParts/res/layout/preference_dialog_vibrator_tuning.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4884
+      },
+      "writtenOn": "2013-01-28T19:46:33Z",
+      "side": 1,
+      "message": "tap",
+      "revId": "1a19df546b4c32025dd84b64b5ce17714ccf0f79",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAc3//9YM\u003d",
+        "filename": "MakoParts/src/com/cyanogenmod/settings/device/ColorTuningPreference.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 4884
+      },
+      "writtenOn": "2013-01-28T19:46:33Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "1a19df546b4c32025dd84b64b5ce17714ccf0f79",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAc3//9YI\u003d",
+        "filename": "MakoParts/src/com/cyanogenmod/settings/device/ColorTuningPreference.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 4884
+      },
+      "writtenOn": "2013-01-28T19:46:33Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "1a19df546b4c32025dd84b64b5ce17714ccf0f79",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAc3//9YE\u003d",
+        "filename": "MakoParts/src/com/cyanogenmod/settings/device/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 4884
+      },
+      "writtenOn": "2013-01-28T19:46:33Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "1a19df546b4c32025dd84b64b5ce17714ccf0f79",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAc3//9YA\u003d",
+        "filename": "MakoParts/src/com/cyanogenmod/settings/device/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 4884
+      },
+      "writtenOn": "2013-01-28T19:46:33Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "1a19df546b4c32025dd84b64b5ce17714ccf0f79",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAc3//9X8\u003d",
+        "filename": "MakoParts/src/com/cyanogenmod/settings/device/Utils.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 4884
+      },
+      "writtenOn": "2013-01-28T19:46:33Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "1a19df546b4c32025dd84b64b5ce17714ccf0f79",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
