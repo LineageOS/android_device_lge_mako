@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "AAAAc3//9Xg\u003d",
+        "filename": "MakoParts/res/values-de/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4884
+      },
+      "writtenOn": "2013-01-28T20:12:56Z",
+      "side": 1,
+      "message": "Sieht sehr komisch aus, ist aber von der Rechtschreibung her richtig.",
+      "revId": "ffdf8d46a21fd560071764adf9732abe2212f3c5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAc3//9XU\u003d",
+        "filename": "MakoParts/res/values-de/strings.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 4884
+      },
+      "writtenOn": "2013-01-28T20:12:56Z",
+      "side": 1,
+      "message": "Wenn ich es richtig verstanden habe ist es ein Popup, oder? Sollten wir dann nicht wie sonst auch immer eine Leerzeile zwischen dem \u0027Vorsicht:\u0027 und dem Warnhinweistext setzen?",
+      "revId": "ffdf8d46a21fd560071764adf9732abe2212f3c5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAc3//9Xk\u003d",
+        "filename": "MakoParts/src/com/cyanogenmod/settings/device/Utils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 4884
+      },
+      "writtenOn": "2013-01-28T20:12:56Z",
+      "side": 1,
+      "message": "whitespace",
+      "revId": "ffdf8d46a21fd560071764adf9732abe2212f3c5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
