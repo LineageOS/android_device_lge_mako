@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAc3//9Eg\u003d",
+        "filename": "MakoParts/res/values-de/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-01-29T20:45:46Z",
+      "side": 1,
+      "message": "Nö, es ist \u0027Erweitert\u0027. Wenn die Gerätebezeichnung raus soll, wäre \u0027Geräteeinstellungen\u0027 glaub ich ok.",
+      "parentUuid": "AAAAc3//9Fc\u003d",
+      "revId": "0963096087200a47073b2a25a4516c692baa634a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAc3//9Fg\u003d",
         "filename": "MakoParts/res/values-de/strings.xml",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2013-01-29T20:32:50Z",
       "side": 1,
       "message": "Bildschirm",
+      "revId": "0963096087200a47073b2a25a4516c692baa634a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "AAAAc3//9EY\u003d",
+        "filename": "MakoParts/res/values-de/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-01-29T20:45:46Z",
+      "side": 1,
+      "message": "Ich hab mich an den Listeneintrag im Hauptmenü gehalten (Töne, Display, Speicher, Akku, ...).",
+      "parentUuid": "AAAAc3//9Fg\u003d",
       "revId": "0963096087200a47073b2a25a4516c692baa634a",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
