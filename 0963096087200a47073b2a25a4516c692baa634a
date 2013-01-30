@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "AAAAc3//870\u003d",
+        "filename": "MakoParts/res/values-de/strings.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 4977
+      },
+      "writtenOn": "2013-01-30T03:30:06Z",
+      "side": 1,
+      "message": "Stimmt. Das ist erst in aosp konsistent zu machen. Display als Kategorietitel, alles weitere mit bildschirm, z. B. Bildschirmhelligkeit oder -sperre.",
+      "parentUuid": "AAAAc3//9EQ\u003d",
+      "revId": "0963096087200a47073b2a25a4516c692baa634a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "AAAAc3//9Fg\u003d",
         "filename": "MakoParts/res/values-de/strings.xml",
         "patchSetId": 6
