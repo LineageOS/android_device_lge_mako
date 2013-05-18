@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "hvYwwKA",
+        "filename": "liblight/lights.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1850
+      },
+      "writtenOn": "2013-05-18T03:36:23Z",
+      "side": 1,
+      "message": "Couldn\u0027t the \"state\" and \"state_type\" parameters be removed while cleaning this up (here and at the call sites)?",
+      "revId": "89233d37b26b620f41d827c49773f86ed483f053",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
