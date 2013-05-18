@@ -16,6 +16,24 @@
       "revId": "89233d37b26b620f41d827c49773f86ed483f053",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "hvaTIE4",
+        "filename": "liblight/lights.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-05-18T10:48:18Z",
+      "side": 1,
+      "message": "Yes, see http://review.cyanogenmod.org/37862 ;)\nI didn\u0027t want to change more than necessary on the release branch.",
+      "parentUuid": "hvYwwKA",
+      "revId": "89233d37b26b620f41d827c49773f86ed483f053",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
