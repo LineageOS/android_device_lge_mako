@@ -34,6 +34,24 @@
       "revId": "8c380a86ea790188502fb156e435fffbfc3e83f6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afb71cf_0400b6a9",
+        "filename": "cmhw/org/cyanogenmod/hardware/DisplayGammaCalibration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5875
+      },
+      "writtenOn": "2013-09-24T09:34:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3afb71cf_04b6763d",
+      "revId": "8c380a86ea790188502fb156e435fffbfc3e83f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
