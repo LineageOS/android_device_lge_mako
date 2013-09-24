@@ -16,6 +16,24 @@
       "revId": "8c380a86ea790188502fb156e435fffbfc3e83f6",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3afb71cf_04b6763d",
+        "filename": "cmhw/org/cyanogenmod/hardware/DisplayGammaCalibration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 5875
+      },
+      "writtenOn": "2013-09-24T08:05:15Z",
+      "side": 1,
+      "message": "I put Amp 0 back in as it seems to be an accepted convention amongst _some_ other ROM users. The key to me seems the contrast/ brightness so it\u0027s no loss if that goes",
+      "parentUuid": "3afb71cf_a4a44208",
+      "revId": "8c380a86ea790188502fb156e435fffbfc3e83f6",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
