@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3afb71cf_84a3864f",
+        "filename": "cmhw/org/cyanogenmod/hardware/DisplayGammaCalibration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-09-24T16:09:45Z",
+      "side": 1,
+      "message": "This still isn\u0027t translatable.",
+      "revId": "eef6a32b27f7369558b05eb52c000c064f689ed2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
