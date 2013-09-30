@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da37b569_96daba77",
+        "filename": "overlay/packages/apps/Settings/res/values/arrays.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1579
+      },
+      "writtenOn": "2013-09-30T23:55:08Z",
+      "side": 1,
+      "message": "I personally prefer have a blank line between resources tag and values as start/end marker and frameworks overlay also has it on mako.",
+      "revId": "dd74f50750d8e561f3e028f04090bc81b46692b2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da37b569_36e72e42",
+        "filename": "overlay/packages/apps/Settings/res/values/arrays.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1579
+      },
+      "writtenOn": "2013-09-30T23:55:08Z",
+      "side": 1,
+      "message": "see above comment",
+      "revId": "dd74f50750d8e561f3e028f04090bc81b46692b2",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
