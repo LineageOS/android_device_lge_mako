@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a41bdd9_dffe1b05",
+        "filename": "cmhw/org/cyanogenmod/hardware/DisplayGammaCalibration.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2013-10-04T06:58:46Z",
+      "side": 1,
+      "message": "The \u0027for this device\u0027 part can be removed - all of of this stuff is device specific. I\u0027d say just nuke the comment entirely.",
+      "revId": "283e102c050f1abe104a89d4c6eacbb5c7748539",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
