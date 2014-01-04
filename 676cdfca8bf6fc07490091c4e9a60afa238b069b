@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a5ae5dd_25006eaa",
+        "filename": "overlay/packages/apps/Settings/res/values/config.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1579
+      },
+      "writtenOn": "2014-01-04T03:23:42Z",
+      "side": 1,
+      "message": "use 4 spaces instead of tab",
+      "revId": "676cdfca8bf6fc07490091c4e9a60afa238b069b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
