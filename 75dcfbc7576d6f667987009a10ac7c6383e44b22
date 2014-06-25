@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba0121b8_24035075",
+        "filename": "proprietary-blobs.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 5531
+      },
+      "writtenOn": "2014-06-25T08:52:30Z",
+      "side": 1,
+      "message": "why extract it at all?",
+      "revId": "75dcfbc7576d6f667987009a10ac7c6383e44b22",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
