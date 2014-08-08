@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a061dce_32eedd8b",
+        "filename": "init.mako.rc",
+        "patchSetId": 1
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 5842
+      },
+      "writtenOn": "2014-08-08T21:40:39Z",
+      "side": 1,
+      "message": "shouldn\u0027t mpdecision be stopped here to disable power saving or does he do sth. good when using the performance governor?",
+      "revId": "96df222bebf4b6ec9537d73b54c15f7233cf5d42",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
