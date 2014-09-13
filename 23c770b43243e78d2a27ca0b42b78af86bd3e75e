@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a1b2928_7c365f04",
+        "filename": "init.mako.rc",
+        "patchSetId": 2
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 5842
+      },
+      "writtenOn": "2014-09-13T18:48:59Z",
+      "side": 1,
+      "message": "mpdecision should be stopped here",
+      "revId": "23c770b43243e78d2a27ca0b42b78af86bd3e75e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
