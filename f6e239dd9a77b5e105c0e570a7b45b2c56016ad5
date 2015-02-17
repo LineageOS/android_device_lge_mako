@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bacf61ea_c7cebc82",
+        "filename": "init.mako.rc",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1063
+      },
+      "writtenOn": "2015-02-17T05:37:07Z",
+      "side": 1,
+      "message": "Those should be ondemand, I think, to match the defaults set above (around line 235).",
+      "revId": "f6e239dd9a77b5e105c0e570a7b45b2c56016ad5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
