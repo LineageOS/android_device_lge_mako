@@ -16,6 +16,41 @@
       "revId": "f6e239dd9a77b5e105c0e570a7b45b2c56016ad5",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bacf61ea_c7023c3e",
+        "filename": "init.mako.rc",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-02-17T09:48:48Z",
+      "side": 1,
+      "message": "Usually the power save profile sets the powersave governor though, this drops the CPU freq to the minimum available.",
+      "parentUuid": "bacf61ea_c7cebc82",
+      "revId": "f6e239dd9a77b5e105c0e570a7b45b2c56016ad5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bacf61ea_a7ff4833",
+        "filename": "init.mako.rc",
+        "patchSetId": 3
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2015-02-17T09:48:48Z",
+      "side": 1,
+      "message": "This section should be ondemand though.",
+      "revId": "f6e239dd9a77b5e105c0e570a7b45b2c56016ad5",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
