@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f2f7f8d_40273214",
+        "filename": "camera/QCameraHWI_Parm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3256,
+      "author": {
+        "id": 9199
+      },
+      "writtenOn": "2015-11-06T02:25:58Z",
+      "side": 0,
+      "message": "always true",
+      "revId": "b5c790aba6e09203bb4add197564667cc6e79d38",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f2f7f8d_2024260d",
+        "filename": "camera/QCameraHWI_Parm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4054,
+      "author": {
+        "id": 9199
+      },
+      "writtenOn": "2015-11-06T02:25:58Z",
+      "side": 0,
+      "message": "always true",
+      "revId": "b5c790aba6e09203bb4add197564667cc6e79d38",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f2f7f8d_00212afc",
+        "filename": "camera/QCameraHWI_Parm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4076,
+      "author": {
+        "id": 9199
+      },
+      "writtenOn": "2015-11-06T02:25:58Z",
+      "side": 0,
+      "message": "always true",
+      "revId": "b5c790aba6e09203bb4add197564667cc6e79d38",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f2f7f8d_e01dfebd",
+        "filename": "camera/QCameraHWI_Parm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4079,
+      "author": {
+        "id": 9199
+      },
+      "writtenOn": "2015-11-06T02:25:58Z",
+      "side": 0,
+      "message": "always true",
+      "revId": "b5c790aba6e09203bb4add197564667cc6e79d38",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f2f7f8d_c078c2f9",
+        "filename": "camera/QCameraHWI_Parm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4088,
+      "author": {
+        "id": 9199
+      },
+      "writtenOn": "2015-11-06T02:25:58Z",
+      "side": 0,
+      "message": "always true",
+      "revId": "b5c790aba6e09203bb4add197564667cc6e79d38",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
