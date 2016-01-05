@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fce034c_1dcc1488",
+        "filename": "overlay/frameworks/base/core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2016-01-05T02:21:05Z",
+      "side": 1,
+      "message": "WCDMA|GSM should be sufficient here.",
+      "revId": "5f6d6e83cfa0e4deb6592b8bc02cfa71592f8a1a",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
