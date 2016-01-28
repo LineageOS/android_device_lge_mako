@@ -134,8 +134,8 @@ on boot
 
 # Assign TCP buffer thresholds to be ceiling value of technology maximums
 # Increased technology maximums should be reflected here.
-    write /proc/sys/net/core/rmem_max  1220608
-    write /proc/sys/net/core/wmem_max  1220608
+    write /proc/sys/net/core/rmem_max  2097152
+    write /proc/sys/net/core/wmem_max  2097152
 
 # Wifi firmware reload path
     chown wifi wifi /sys/module/wlan/parameters/fwpath
