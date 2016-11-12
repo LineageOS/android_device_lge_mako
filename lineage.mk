@@ -1,6 +1,7 @@
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1280
 TARGET_SCREEN_WIDTH := 768
+TARGET_BOOTANIMATION_HALF_RES := true
 
 # Inherit some common Lineage stuff.
 $(call inherit-product, vendor/lineage/config/common_mini_phone.mk)
