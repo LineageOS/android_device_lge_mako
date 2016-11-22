@@ -211,6 +211,8 @@ PRODUCT_PACKAGES += \
     init.mako.power.rc \
     init.mako.usb.rc \
     init.mako.wifi.sh \
+    init.qcom.devstart.sh \
+    init.qcom.devwait.sh \
     init.recovery.mako.rc \
     ueventd.rc \
     ueventd.mako.rc

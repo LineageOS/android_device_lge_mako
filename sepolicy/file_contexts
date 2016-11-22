@@ -106,6 +106,9 @@
 /system/vendor/bin/init\.mako\.bt\.sh      u:object_r:bluetooth_loader_exec:s0
 /system/vendor/bin/init\.mako\.wifi\.sh    u:object_r:conn_init_exec:s0
 
+/system/vendor/bin/init\.qcom\.devstart\.sh            u:object_r:init-qcom-devstart-sh_exec:s0
+/system/vendor/bin/init\.qcom\.devwait\.sh             u:object_r:init-qcom-devwait-sh_exec:s0
+
 /system/vendor/bin/efsks               u:object_r:kickstart_exec:s0
 /system/vendor/bin/ks                  u:object_r:kickstart_exec:s0
 /system/vendor/bin/qcks                u:object_r:kickstart_exec:s0
@@ -117,3 +120,6 @@
 /persist/sensors(/.*)?                 u:object_r:persist_sensors_file:s0
 /persist/widevine(/.*)?                u:object_r:persist_drm_file:s0
 /persist/wifi(/.*)?                    u:object_r:persist_wifi_file:s0
+
+# Sysfs entry for audio
+/sys/kernel/boot_adsp/boot         u:object_r:sysfs_audio:s0
