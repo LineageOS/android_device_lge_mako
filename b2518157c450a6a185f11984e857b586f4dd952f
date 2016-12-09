@@ -16,6 +16,24 @@
       "revId": "b2518157c450a6a185f11984e857b586f4dd952f",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f681702_ba1b4e19",
+        "filename": "overlay/frameworks/base/core/res/res/values/config.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 15698
+      },
+      "writtenOn": "2016-12-09T14:24:20Z",
+      "side": 0,
+      "message": "yes, this is a duplicate.",
+      "parentUuid": "5f681702_3f5c507d",
+      "revId": "b2518157c450a6a185f11984e857b586f4dd952f",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
