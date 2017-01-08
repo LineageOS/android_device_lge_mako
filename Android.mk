@@ -23,7 +23,7 @@
 # *not* include it on all devices, so it is safe even with hardware-specific
 # components.
 
-ifneq ($(filter mako occam,$(TARGET_DEVICE)),)
+ifneq ($(filter mako,$(TARGET_DEVICE)),)
 
 LOCAL_PATH := $(call my-dir)
 
@@ -31,7 +31,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := wpa_supplicant_overlay.conf
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := $(LOCAL_MODULE)
+LOCAL_SRC_FILES    := configs/$(LOCAL_MODULE)
 LOCAL_MODULE_PATH  := $(TARGET_OUT_ETC)/wifi
 include $(BUILD_PREBUILT)
 
@@ -39,7 +39,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := p2p_supplicant_overlay.conf
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := $(LOCAL_MODULE)
+LOCAL_SRC_FILES    := configs/$(LOCAL_MODULE)
 LOCAL_MODULE_PATH  := $(TARGET_OUT_ETC)/wifi
 include $(BUILD_PREBUILT)
 
@@ -47,7 +47,7 @@ include $(CLEAR_VARS)
 LOCAL_MODULE       := hostapd_default.conf
 LOCAL_MODULE_TAGS  := optional
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := $(LOCAL_MODULE)
+LOCAL_SRC_FILES    := configs/$(LOCAL_MODULE)
 LOCAL_MODULE_PATH  := $(TARGET_OUT_ETC)/hostapd
 include $(BUILD_PREBUILT)
 
@@ -64,4 +64,3 @@ $(shell mkdir -p $(TARGET_OUT_ETC)/firmware/wcd9310; \
 	$(TARGET_OUT_ETC)/firmware/wcd9310/wcd9310_mbhc.bin)
 
 endif
-
