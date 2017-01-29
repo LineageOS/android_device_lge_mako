@@ -40,7 +40,7 @@ setup_vendor "$DEVICE" "$VENDOR" "$CM_ROOT"
 write_headers
 
 # The device blobs
-write_makefiles "$MY_DIR"/proprietary-files.txt
+write_makefiles "$MY_DIR"/proprietary-blobs.txt
 
 # We are done with device
 write_footers
