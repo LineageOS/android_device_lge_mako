@@ -226,6 +226,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	power.mako
 
+# Shims
+PRODUCT_PACKAGES += \
+	libshimwvm
+
 # Gello
  PRODUCT_PACKAGES += \
 	Gello
