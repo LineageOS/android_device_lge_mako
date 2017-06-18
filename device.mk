@@ -57,12 +57,12 @@ PRODUCT_COPY_FILES += \
 	device/lge/mako/rootdir/init.mako.usb.rc:root/init.mako.usb.rc \
 	device/lge/mako/rootdir/fstab.mako:root/fstab.mako \
 	device/lge/mako/rootdir/ueventd.mako.rc:root/ueventd.mako.rc \
-	device/lge/mako/media_profiles.xml:system/etc/media_profiles.xml \
+	device/lge/mako/media/media_profiles.xml:system/etc/media_profiles.xml \
 	frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
 	frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
 	frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
-	device/lge/mako/media_codecs.xml:system/etc/media_codecs.xml \
-	device/lge/mako/media_codecs_performance.xml:system/etc/media_codecs_performance.xml
+	device/lge/mako/media/media_codecs.xml:system/etc/media_codecs.xml \
+	device/lge/mako/media/media_codecs_performance.xml:system/etc/media_codecs_performance.xml
 
 # Prebuilt kl and kcm keymaps
 PRODUCT_COPY_FILES += \
