@@ -44,10 +44,10 @@ PRODUCT_COPY_FILES += \
 	device/lge/mako/rootdir/init.mako.wifi.sh:system/bin/init.mako.wifi.sh
 
 PRODUCT_COPY_FILES += \
-	device/lge/mako/audio_policy.conf:system/etc/audio_policy.conf
+	device/lge/mako/audio/audio_policy.conf:system/etc/audio_policy.conf
 
 PRODUCT_COPY_FILES += \
-	device/lge/mako/mixer_paths.xml:system/etc/mixer_paths.xml
+	device/lge/mako/audio/mixer_paths.xml:system/etc/mixer_paths.xml
 
 PRODUCT_COPY_FILES += \
 	device/lge/mako/thermald-mako.conf:system/etc/thermald.conf
@@ -161,7 +161,7 @@ PRODUCT_PACKAGES += \
 # Voice processing
 PRODUCT_PACKAGES += libqcomvoiceprocessing
 PRODUCT_COPY_FILES += \
-    device/lge/mako/audio_effects.conf:system/vendor/etc/audio_effects.conf
+    device/lge/mako/audio/audio_effects.conf:system/vendor/etc/audio_effects.conf
 
 PRODUCT_PACKAGES += \
 	hci_qcomm_init
