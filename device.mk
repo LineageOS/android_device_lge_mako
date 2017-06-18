@@ -38,9 +38,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES +=  libstlport
 
 PRODUCT_COPY_FILES += \
-	device/lge/mako/WCNSS_cfg.dat:system/vendor/firmware/wlan/prima/WCNSS_cfg.dat \
-	device/lge/mako/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
-	device/lge/mako/WCNSS_qcom_wlan_nv.bin:system/etc/wifi/WCNSS_qcom_wlan_nv.bin \
+	device/lge/mako/wifi/WCNSS_cfg.dat:system/vendor/firmware/wlan/prima/WCNSS_cfg.dat \
+	device/lge/mako/wifi/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
+	device/lge/mako/wifi/WCNSS_qcom_wlan_nv.bin:system/etc/wifi/WCNSS_qcom_wlan_nv.bin \
 	device/lge/mako/rootdir/init.mako.wifi.sh:system/bin/init.mako.wifi.sh
 
 PRODUCT_COPY_FILES += \
@@ -219,9 +219,9 @@ PRODUCT_PACKAGES += \
 	keystore.msm8960
 
 PRODUCT_PACKAGES += \
-	hostapd_default.conf \
-	wpa_supplicant_overlay.conf \
-	p2p_supplicant_overlay.conf
+	wifi/hostapd_default.conf \
+	wifi/wpa_supplicant_overlay.conf \
+	wifi/p2p_supplicant_overlay.conf
 
 PRODUCT_PACKAGES += \
 	power.mako
