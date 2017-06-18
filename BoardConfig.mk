@@ -84,7 +84,7 @@ ifeq ($(HOST_OS),linux)
 endif
 WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
 
-TARGET_RECOVERY_FSTAB = device/lge/mako/fstab.mako
+TARGET_RECOVERY_FSTAB = device/lge/mako/rootdir/fstab.mako
 RECOVERY_FSTAB_VERSION = 2
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 23068672 # 22M
