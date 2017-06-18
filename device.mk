@@ -195,7 +195,7 @@ endif
 
 # GPS configuration
 PRODUCT_COPY_FILES += \
-        device/lge/mako/gps.conf:system/etc/gps.conf
+        device/lge/mako/gps/gps.conf:system/etc/gps.conf
 
 # GPS
 PRODUCT_PACKAGES += \
