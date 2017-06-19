@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da87b5cf_bf25aeac",
+        "filename": "Android.mk",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 16082
+      },
+      "writtenOn": "2017-06-19T13:08:20Z",
+      "side": 0,
+      "message": "This doesn\u0027t need to be in your change",
+      "revId": "f96886eca024d53ec48861fa298a04d9895eade7",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
