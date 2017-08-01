@@ -1,3 +1,4 @@
+# All
 bin/ATFWD-daemon
 bin/bridgemgrd
 bin/btnvtool

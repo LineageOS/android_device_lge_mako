@@ -1,5 +1,6 @@
 #!/bin/bash
 #
+# Copyright (C) 2016 The CyanogenMod Project
 # Copyright (C) 2017 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +21,8 @@ set -e
 DEVICE=mako
 VENDOR=lge
 
+INITIAL_COPYRIGHT_YEAR=2012
+
 # Load extract_utils and do some sanity checks
 MY_DIR="${BASH_SOURCE%/*}"
 if [[ ! -d "$MY_DIR" ]]; then MY_DIR="$PWD"; fi
@@ -33,14 +36,13 @@ if [ ! -f "$HELPER" ]; then
 fi
 . "$HELPER"
 
-# Initialize the helper for device
+# Initialize the helper
 setup_vendor "$DEVICE" "$VENDOR" "$CM_ROOT"
 
 # Copyright headers and guards
 write_headers
 
-# The device blobs
 write_makefiles "$MY_DIR"/proprietary-blobs.txt
 
-# We are done with device
+# Finish
 write_footers
