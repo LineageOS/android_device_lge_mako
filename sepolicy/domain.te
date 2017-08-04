@@ -1,3 +1,6 @@
 userdebug_or_eng(`
   allow domain diag_device:chr_file rw_file_perms;
 ')
+
+# Allow all domains read access to sysfs_thermal
+r_dir_file(domain, sysfs_thermal)
