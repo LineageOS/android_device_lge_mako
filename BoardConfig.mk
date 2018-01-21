@@ -25,7 +25,7 @@ TARGET_NO_BOOTLOADER := true
 BOARD_KERNEL_BASE := 0x80200000
 BOARD_KERNEL_IMAGE_NAME = zImage
 BOARD_KERNEL_PAGESIZE := 2048
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=mako lpj=67677 user_debug=31
+BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=mako lpj=67677 user_debug=31 vmalloc=340M
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01600000
 TARGET_KERNEL_SOURCE := kernel/lge/mako
 TARGET_KERNEL_CONFIG := lineageos_mako_defconfig
