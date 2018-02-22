@@ -2,9 +2,5 @@
  {
    "repository": "lge-kernel-mako",
    "target_path": "kernel/lge/mako"
- },
- {
-   "repository": "android_external_stlport",
-   "target_path": "external/stlport"
  }
 ]
