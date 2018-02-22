@@ -102,8 +102,7 @@ BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET := true
 
 TARGET_RELEASETOOLS_EXTENSIONS := device/lge/mako
 
-BOARD_SEPOLICY_DIRS += \
-       device/lge/mako/sepolicy
+# BOARD_SEPOLICY_DIRS += device/lge/mako/sepolicy
 
 BOARD_CHARGER_ENABLE_SUSPEND := true
 
