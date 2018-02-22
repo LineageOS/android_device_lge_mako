@@ -25,8 +25,14 @@ $(call inherit-product-if-exists, vendor/lge/mako/mako-vendor.mk)
 # Overlays
 DEVICE_PACKAGE_OVERLAYS := $(LOCAL_PATH)/overlay
 
-# AAPTH
+# This device is xhdpi.  However the platform doesn't
+# currently contain all of the bitmaps at xhdpi density so
+# we do this little trick to fall back to the hdpi version
+# if the xhdpi doesn't exist.
+PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
+# A list of dpis to select prebuilt apk, in precedence order.
+PRODUCT_AAPT_PREBUILT_DPI := hdpi
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -235,17 +241,6 @@ PRODUCT_COPY_FILES += \
 # USB HAL
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service
-
-# Wifi
-PRODUCT_PACKAGES += \
-    android.hardware.wifi@1.0-service \
-    conn_init \
-    dhcpcd.conf \
-    wificond \
-    hostapd \
-    libwfcu \
-    wpa_supplicant \
-    wpa_supplicant.conf
 
 # Wifi
 PRODUCT_PACKAGES += \

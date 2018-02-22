@@ -8,6 +8,9 @@ $(call inherit-product, vendor/lineage/config/common_mini_phone.mk)
 # Inherit from the common Open Source product configuration
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 
+# Inherit from hardware-specific part of the product configuration
+$(call inherit-product, device/lge/mako/device.mk)
+
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := mako
 PRODUCT_NAME := lineage_mako
