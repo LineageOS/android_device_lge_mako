@@ -35,6 +35,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <poll.h>
+#include <string.h>
 #include "mm_camera_interface2.h"
 #include "mm_camera.h"
 
@@ -126,7 +127,6 @@ static int32_t mm_camera_poll_proc_msm(mm_camera_poll_thread_t *poll_cb, struct 
            (fds[i].revents & POLLRDNORM)) {
             if(poll_cb->data.used) {
                 mm_camera_msm_data_notify(poll_cb->data.my_obj,
-                                        fds[i].fd,
                                         poll_cb->data.poll_streams[i]->stream_type);
             }
 
@@ -199,7 +199,6 @@ static void mm_camera_poll_proc_pipe(mm_camera_poll_thread_t *poll_cb)
 
 static int mm_camera_poll_ch_busy(mm_camera_obj_t * my_obj, int ch_type)
 {
-    int i;
     int used = 0;
     mm_camera_poll_thread_t *poll_cb = &my_obj->poll_threads[ch_type];
     pthread_mutex_lock(&poll_cb->mutex);
@@ -227,7 +226,6 @@ int32_t mm_camera_poll_dispatch_buffered_frames(mm_camera_obj_t * my_obj, int ch
 int mm_camera_poll_busy(mm_camera_obj_t * my_obj)
 {
     int i;
-    mm_camera_poll_thread_t *poll_cb;
     for(i = 0; i < (MM_CAMERA_POLL_THRAED_MAX - 1); i++) {
         if(mm_camera_poll_ch_busy(my_obj,  i) > 0)
           return 1;
@@ -282,8 +280,6 @@ static void *mm_camera_poll_fn(mm_camera_poll_thread_t *poll_cb)
 
 static void *mm_camera_poll_thread(void *data)
 {
-    int rc = 0;
-    int i;
     void *ret = NULL;
     mm_camera_poll_thread_t *poll_cb = data;
 
@@ -302,7 +298,7 @@ static void *mm_camera_poll_thread(void *data)
     return ret;
 }
 
-int mm_camera_poll_start(mm_camera_obj_t * my_obj,  mm_camera_poll_thread_t *poll_cb)
+int mm_camera_poll_start(mm_camera_poll_thread_t *poll_cb)
 {
     pthread_mutex_lock(&poll_cb->mutex);
     poll_cb->status = 0;
@@ -323,9 +319,8 @@ int mm_camera_poll_start(mm_camera_obj_t * my_obj,  mm_camera_poll_thread_t *pol
     return MM_CAMERA_OK;
 }
 
-int mm_camera_poll_stop(mm_camera_obj_t * my_obj, mm_camera_poll_thread_t *poll_cb)
+int mm_camera_poll_stop(mm_camera_poll_thread_t *poll_cb)
 {
-    CDBG("%s, my_obj=0x%x\n", __func__, (uint32_t)my_obj);
     mm_camera_poll_sig(poll_cb, MM_CAMERA_PIPE_CMD_EXIT);
     if (pthread_join(poll_cb->data.pid, NULL) != 0) {
         CDBG("%s: pthread dead already\n", __func__);
@@ -413,7 +408,7 @@ int mm_camera_poll_thread_launch(mm_camera_obj_t * my_obj, int ch_type)
          __func__, ch_type, poll_cb->data.poll_type,
          poll_cb->data.pfds[0], poll_cb->data.pfds[1]);
     /* launch the thread */
-    rc = mm_camera_poll_start(my_obj, poll_cb);
+    rc = mm_camera_poll_start(poll_cb);
     return rc;
 }
 
@@ -426,7 +421,7 @@ int mm_camera_poll_thread_release(mm_camera_obj_t * my_obj, int ch_type)
              __func__, ch_type, my_obj->my_id);
         return -MM_CAMERA_E_INVALID_OPERATION;
     }
-    rc = mm_camera_poll_stop(my_obj, poll_cb);
+    rc = mm_camera_poll_stop(poll_cb);
 
     if(poll_cb->data.pfds[0]) {
         close(poll_cb->data.pfds[0]);
@@ -458,7 +453,7 @@ void mm_camera_poll_threads_deinit(mm_camera_obj_t * my_obj)
     for(i = 0; i < MM_CAMERA_POLL_THRAED_MAX; i++) {
         poll_cb = &my_obj->poll_threads[i];
         if(poll_cb->data.used)
-            mm_camera_poll_stop(my_obj, poll_cb);
+            mm_camera_poll_stop(poll_cb);
         pthread_mutex_destroy(&poll_cb->mutex);
         pthread_cond_destroy(&poll_cb->cond_v);
         memset(poll_cb, 0, sizeof(mm_camera_poll_thread_t));

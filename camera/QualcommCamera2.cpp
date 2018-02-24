@@ -137,17 +137,6 @@ QCameraHardwareInterface *util_get_Hal_obj( struct camera_device * device)
     return hardware;
 }
 
-#if 0
-QCameraParameters* util_get_HAL_parameter( struct camera_device * device)
-{
-    QCameraParameters *param = NULL;
-    if(device && device->priv){
-        camera_hardware_t *camHal = (camera_hardware_t *)device->priv;
-        param = &(camHal->parameters);
-    }
-    return param;
-}
-#endif
 extern "C" int get_number_of_cameras()
 {
     /* try to query every time we get the call!*/
@@ -162,7 +151,7 @@ extern "C" int get_camera_info(int camera_id, struct camera_info *info)
     ALOGV("Q%s: E", __func__);
     if(info) {
         struct CameraInfo camInfo;
-        memset(&camInfo, -1, sizeof (struct CameraInfo));
+        memset((void *) &camInfo, -1, sizeof (struct CameraInfo));
         android::HAL_getCameraInfo(camera_id, &camInfo);
         if (camInfo.facing >= 0) {
             rc = 0;
@@ -455,12 +444,7 @@ int set_parameters(struct camera_device * device, const char *parms)
     int rc = -1;
     QCameraHardwareInterface *hardware = util_get_Hal_obj(device);
     if(hardware != NULL && parms){
-        //QCameraParameters param;// = util_get_HAL_parameter(device);
-        //String8 str = String8(parms);
-
-        //param.unflatten(str);
         rc = hardware->setParameters(parms);
-        //rc = 0;
   }
   return rc;
 }
@@ -488,13 +472,13 @@ void put_parameters(struct camera_device * device, char *parm)
 }
 
 int send_command(struct camera_device * device,
-            int32_t cmd, int32_t arg1, int32_t arg2)
+            int32_t cmd, int32_t arg1 __unused, int32_t arg2 __unused)
 {
     ALOGV("Q%s: E", __func__);
     int rc = -1;
     QCameraHardwareInterface *hardware = util_get_Hal_obj(device);
     if(hardware != NULL){
-        rc = hardware->sendCommand( cmd, arg1, arg2);
+        rc = hardware->sendCommand(cmd);
     }
     return rc;
 }

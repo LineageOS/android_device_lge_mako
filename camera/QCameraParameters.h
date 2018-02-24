@@ -23,7 +23,6 @@
 
 namespace android {
 
-#ifndef QCOM_HARDWARE
 struct FPSRange{
     int minFPS;
     int maxFPS;
@@ -36,8 +35,6 @@ struct FPSRange{
         maxFPS=max;
     };
 };
-#endif
-
 class QCameraParameters: public CameraParameters
 {
 public:

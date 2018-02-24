@@ -125,34 +125,7 @@ end:
     return rc;
 }
 
-static int32_t mm_camera_ctrl_set_toggle_afr (mm_camera_obj_t *my_obj) {
-    int rc = 0;
-    int value = 0;
-    if(0 != (rc =  mm_camera_util_g_ctrl(my_obj->ctrl_fd,
-            V4L2_CID_EXPOSURE_AUTO, &value))){
-        goto end;
-    }
-    /* V4L2_CID_EXPOSURE_AUTO needs to be AUTO or SHUTTER_PRIORITY */
-    if (value != V4L2_EXPOSURE_AUTO && value != V4L2_EXPOSURE_SHUTTER_PRIORITY) {
-    CDBG("%s: V4L2_CID_EXPOSURE_AUTO needs to be AUTO/SHUTTER_PRIORITY\n",
-        __func__);
-    return -1;
-  }
-    if(0 != (rc =  mm_camera_util_g_ctrl(my_obj->ctrl_fd,
-            V4L2_CID_EXPOSURE_AUTO_PRIORITY, &value))){
-        goto end;
-    }
-    value = !value;
-    if(0 != (rc =  mm_camera_util_s_ctrl(my_obj->ctrl_fd,
-            V4L2_CID_EXPOSURE_AUTO_PRIORITY, value))){
-        goto end;
-    }
-end:
-    return rc;
-}
-
 static mm_camera_channel_type_t mm_camera_util_opcode_2_ch_type(
-                             mm_camera_obj_t *my_obj,
                              mm_camera_ops_type_t opcode)
 {
     mm_camera_channel_type_t type = MM_CAMERA_CH_MAX;
@@ -286,14 +259,6 @@ int32_t mm_camera_set_general_parm(mm_camera_obj_t * my_obj, mm_camera_parm_t *p
     case MM_CAMERA_PARM_FOCUS_MODE:
         return mm_camera_send_native_ctrl_cmd(my_obj,
                     CAMERA_SET_PARM_AF_MODE, sizeof(int32_t), (void *)parm->p_value);
-#if 0 //to be enabled later: @punits
-    case MM_CAMERA_PARM_AF_MTR_AREA:
-        return mm_camera_send_native_ctrl_cmd(my_obj,
-                    CAMERA_SET_PARM_AF_MTR_AREA, sizeof(af_mtr_area_t), (void *)parm->p_value);*/
-    case MM_CAMERA_PARM_AEC_MTR_AREA:
-        return mm_camera_send_native_ctrl_cmd(my_obj,
-                    CAMERA_SET_AEC_MTR_AREA, sizeof(aec_mtr_area_t), (void *)parm->p_value);
-#endif
     case MM_CAMERA_PARM_CAF_ENABLE:
         return mm_camera_send_native_ctrl_cmd(my_obj,
                     CAMERA_SET_PARM_CAF, sizeof(uint32_t), (void *)parm->p_value);
@@ -457,7 +422,6 @@ int32_t mm_camera_set_parm(mm_camera_obj_t * my_obj,
     mm_camera_parm_t *parm)
 {
     int32_t rc = -1;
-    uint16_t len;
     CDBG("%s type =%d", __func__, parm->parm_type);
     switch(parm->parm_type) {
     case MM_CAMERA_PARM_OP_MODE:
@@ -841,7 +805,7 @@ int32_t mm_camera_action_start(mm_camera_obj_t *my_obj,
     default:
         break;
     }
-    ch_type = mm_camera_util_opcode_2_ch_type(my_obj, opcode);
+    ch_type = mm_camera_util_opcode_2_ch_type(opcode);
     CDBG("%s:ch=%d,op_mode=%d,opcode=%d\n",
         __func__,ch_type,my_obj->op_mode,opcode);
     switch(my_obj->op_mode) {
@@ -889,7 +853,7 @@ int32_t mm_camera_action_start(mm_camera_obj_t *my_obj,
 }
 
 int32_t mm_camera_action_stop(mm_camera_obj_t *my_obj,
-    mm_camera_ops_type_t opcode, void *parm)
+    mm_camera_ops_type_t opcode)
 {
     int32_t rc = -MM_CAMERA_E_GENERAL;
     mm_camera_channel_type_t ch_type;
@@ -899,7 +863,7 @@ int32_t mm_camera_action_stop(mm_camera_obj_t *my_obj,
                                             CAMERA_AUTO_FOCUS_CANCEL, 0, NULL);
     }
 
-    ch_type = mm_camera_util_opcode_2_ch_type(my_obj, opcode);
+    ch_type = mm_camera_util_opcode_2_ch_type(opcode);
     switch(my_obj->op_mode) {
     case MM_CAMERA_OP_MODE_ZSL:
     case MM_CAMERA_OP_MODE_CAPTURE:
@@ -979,22 +943,21 @@ int32_t mm_camera_open(mm_camera_obj_t *my_obj,
 
     do{
         n_try--;
-        my_obj->ctrl_fd = open(dev_name,O_RDWR | O_NONBLOCK);
-		ALOGV("%s:  ctrl_fd = %d", __func__, my_obj->ctrl_fd);
-        ALOGV("Errno:%d",errno);
-        if((my_obj->ctrl_fd > 0) || (errno != EIO) || (n_try <= 0 )) {
-			ALOGV("%s:  opened, break out while loop", __func__);
-
+        errno = 0;
+        my_obj->ctrl_fd = open(dev_name, O_RDWR | O_NONBLOCK);
+        CDBG("%s:  ctrl_fd = %d, errno == %d", __func__, my_obj->ctrl_fd, errno);
+        if((my_obj->ctrl_fd >= 0) || (errno != EIO && errno != ETIMEDOUT) || (n_try <= 0 )) {
+            CDBG_HIGH("%s:  opened, break out while loop", __func__);
             break;
-		}
-        CDBG("%s:failed with I/O error retrying after %d milli-seconds",
-             __func__,sleep_msec);
-        usleep(sleep_msec*1000);
-    }while(n_try>0);
+        }
+        ALOGE("%s:Failed with %s error, retrying after %d milli-seconds",
+             __func__, strerror(errno), sleep_msec);
+        usleep(sleep_msec * 1000);
+    }while (n_try > 0);
 
 	ALOGV("%s:  after while loop", __func__);
     if (my_obj->ctrl_fd <= 0) {
-        CDBG("%s: cannot open control fd of '%s' Errno = %d\n",
+        CDBG_ERROR("%s: cannot open control fd of '%s' Errno = %d\n",
                  __func__, mm_camera_util_get_dev_name(my_obj),errno);
         return -MM_CAMERA_E_GENERAL;
     }
@@ -1103,7 +1066,7 @@ int32_t mm_camera_action(mm_camera_obj_t *my_obj, uint8_t start,
     int32_t rc = - MM_CAMERA_E_INVALID_OPERATION;
 
     if(start)   rc = mm_camera_action_start(my_obj, opcode, parm);
-    else rc = mm_camera_action_stop(my_obj, opcode, parm);
+    else rc = mm_camera_action_stop(my_obj, opcode);
     CDBG("%s:start_flag=%d,opcode=%d,parm=%p,rc=%d\n",__func__,start,opcode,parm, rc);
     return rc;
 }

@@ -419,7 +419,7 @@ public:
     /**
      * Send command to camera driver.
      */
-    int sendCommand(int32_t cmd, int32_t arg1, int32_t arg2);
+    int sendCommand(int32_t cmd);
 
     /**
      * Release the hardware resources owned by this object.  Note that this is
@@ -458,7 +458,6 @@ public:
                                      int *picture_height);
     bool isRawSnapshot();
     bool mShutterSoundPlayed;
-    void dumpFrameToFile(struct msm_frame*, HAL_cam_dump_frm_type_t);
 
     static QCameraHardwareInterface *createInstance(int, int);
     status_t setZSLBurstLookBack(const QCameraParameters& params);
@@ -488,8 +487,6 @@ public:
 
     int cache_ops(int ion_fd, struct ion_flush_data *cache_inv_data, int type);
 
-    void dumpFrameToFile(const void * data, uint32_t size, char* name,
-      char* ext, int index);
     preview_format_info_t getPreviewFormatInfo( );
     bool isCameraReady();
 
@@ -524,18 +521,16 @@ private:
     bool isRecordingRunning();
     bool isSnapshotRunning();
 
-    void processChannelEvent(mm_camera_ch_event_t *, app_notify_cb_t *);
-    void processPreviewChannelEvent(mm_camera_ch_event_type_t channelEvent, app_notify_cb_t *);
-    void processRecordChannelEvent(mm_camera_ch_event_type_t channelEvent, app_notify_cb_t *);
-    void processSnapshotChannelEvent(mm_camera_ch_event_type_t channelEvent, app_notify_cb_t *);
+    void processChannelEvent(mm_camera_ch_event_t *);
+    void processPreviewChannelEvent(mm_camera_ch_event_type_t channelEvent);
+    void processRecordChannelEvent(mm_camera_ch_event_type_t channelEvent);
+    void processSnapshotChannelEvent(mm_camera_ch_event_type_t channelEvent);
     void processCtrlEvent(mm_camera_ctrl_event_t *, app_notify_cb_t *);
-    void processStatsEvent(mm_camera_stats_event_t *, app_notify_cb_t *);
-    void processInfoEvent(mm_camera_info_event_t *event, app_notify_cb_t *);
-    void processprepareSnapshotEvent(cam_ctrl_status_t *);
-    void roiEvent(fd_roi_t roi, app_notify_cb_t *);
-    void zoomEvent(cam_ctrl_status_t *status, app_notify_cb_t *);
+    void processInfoEvent(mm_camera_info_event_t *event);
+    void roiEvent(fd_roi_t roi);
+    void zoomEvent();
     void autofocusevent(cam_ctrl_status_t *status, app_notify_cb_t *);
-    void handleZoomEventForPreview(app_notify_cb_t *);
+    void handleZoomEventForPreview();
     void handleZoomEventForSnapshot(void);
     status_t autoFocusEvent(cam_ctrl_status_t *, app_notify_cb_t *);
     status_t autoFocusMoveEvent(cam_ctrl_status_t *, app_notify_cb_t *);
@@ -609,12 +604,10 @@ private:
     status_t setStrTextures(const QCameraParameters& params);
     status_t setPreviewFormat(const QCameraParameters& params);
     status_t setSelectableZoneAf(const QCameraParameters& params);
-    status_t setOverlayFormats(const QCameraParameters& params);
     status_t setHighFrameRate(const QCameraParameters& params);
     status_t setRedeyeReduction(const QCameraParameters& params);
     status_t setAEBracket(const QCameraParameters& params);
     status_t setFaceDetect(const QCameraParameters& params);
-    status_t setDenoise(const QCameraParameters& params);
     status_t setAecAwbLock(const QCameraParameters & params);
     status_t setHistogram(int histogram_en);
     status_t setRecordingHint(const QCameraParameters& params);
@@ -629,7 +622,7 @@ private:
     status_t setNoDisplayMode(const QCameraParameters& params);
     status_t setCAFLockCancel(void);
 
-    isp3a_af_mode_t getAutoFocusMode(const QCameraParameters& params);
+    isp3a_af_mode_t getAutoFocusMode();
     bool isValidDimension(int w, int h);
 
     String8 create_values_str(const str_map *values, int len);
@@ -653,6 +646,7 @@ private:
     void setExifTags();
     void initExifData();
     void deinitExifData();
+    void setExifTagsDateTime();
     void setExifTagsGPS();
     exif_tags_info_t* getExifData(){ return mExifData; }
     int getExifTableNumEntries() { return mExifTableNumEntries; }

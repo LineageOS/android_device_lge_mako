@@ -187,8 +187,6 @@ status_t QCameraStream::initChannel(int cameraId,
 
     int rc = MM_CAMERA_OK;
     status_t ret = NO_ERROR;
-    mm_camera_op_mode_type_t op_mode=MM_CAMERA_OP_MODE_VIDEO;
-    int i;
 
     ALOGV("QCameraStream::initChannel : E");
     if(MM_CAMERA_CH_PREVIEW_MASK & ch_type_mask){
@@ -229,9 +227,6 @@ status_t QCameraStream::initChannel(int cameraId,
 status_t QCameraStream::deinitChannel(int cameraId,
                                     mm_camera_channel_type_t ch_type)
 {
-
-    int rc = MM_CAMERA_OK;
-
     ALOGV("%s: E, channel = %d\n", __func__, ch_type);
 
     if (MM_CAMERA_CH_MAX <= ch_type) {
@@ -259,8 +254,6 @@ status_t QCameraStream::setFormat(uint8_t ch_type_mask, cam_format_t previewFmt)
 {
     int rc = MM_CAMERA_OK;
     status_t ret = NO_ERROR;
-    int width = 0;  /* width of channel      */
-    int height = 0; /* height of channel */
     cam_ctrl_dimension_t dim;
     mm_camera_ch_image_fmt_parm_t fmt;
     ALOGV("%s: E",__func__);

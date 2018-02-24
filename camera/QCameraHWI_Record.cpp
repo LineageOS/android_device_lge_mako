@@ -27,8 +27,13 @@
 
 #include "QCameraStream.h"
 
-#define LIKELY(exp)   __builtin_expect(!!(exp), 1)
-#define UNLIKELY(exp) __builtin_expect(!!(exp), 0)
+namespace android {
+#ifdef USE_NATIVE_HANDLE_SOURCE
+  typedef struct encoder_nativehandle_buffer_type media_metadata_buffer;
+#else
+  typedef struct encoder_media_buffer_type media_metadata_buffer;
+#endif
+}
 
 /* QCameraStream_record class implementation goes here*/
 /* following code implement the video streaming capture & encoding logic of this class*/
@@ -73,6 +78,8 @@ QCameraStream_record::QCameraStream_record(int cameraId,
   char value[PROPERTY_VALUE_MAX];
   ALOGV("%s: BEGIN", __func__);
 
+  memset(mNativeHandle, 0, sizeof(mNativeHandle));
+
   property_get("persist.debug.sf.showfps", value, "0");
   mDebugFps = atoi(value);
 
@@ -103,7 +110,6 @@ static void record_notify_cb(mm_camera_ch_data_buf_t *bufs_new,
                               void *user_data)
 {
   QCameraStream_record *pme = (QCameraStream_record *)user_data;
-  mm_camera_ch_data_buf_t *bufs_used = 0;
   ALOGV("%s: BEGIN", __func__);
 
   /*
@@ -210,10 +216,11 @@ void QCameraStream_record::releaseEncodeBuffer() {
       ALOGE("%s: Unmapping Video Data Failed", __func__);
 
     if (mHalCamCtrl->mStoreMetaDataInFrame) {
-      struct encoder_media_buffer_type * packet =
-          (struct encoder_media_buffer_type  *)
-          mHalCamCtrl->mRecordingMemory.metadata_memory[cnt]->data;
-      native_handle_delete(const_cast<native_handle_t *>(packet->meta_handle));
+      if (mNativeHandle[cnt] != NULL) {
+        native_handle_close(mNativeHandle[cnt]);
+        native_handle_delete(mNativeHandle[cnt]);
+        mNativeHandle[cnt] = NULL;
+      }
       mHalCamCtrl->mRecordingMemory.metadata_memory[cnt]->release(
         mHalCamCtrl->mRecordingMemory.metadata_memory[cnt]);
 
@@ -309,7 +316,7 @@ void QCameraStream_record::release()
   (void)cam_evt_register_buf_notify(mCameraId, MM_CAMERA_CH_VIDEO,
                                             NULL,
                                             (mm_camera_register_buf_cb_type_t)NULL,
-                                            NULL,
+                                            0,
                                             NULL);
   mInit = false;
   ALOGV("%s: END", __func__);
@@ -326,14 +333,12 @@ status_t QCameraStream_record::processRecordFrame(void *data)
       return NO_ERROR;
     }
 
-    if (UNLIKELY(mDebugFps)) {
+    if (mDebugFps) {
         debugShowVideoFPS();
     }
 
-    mHalCamCtrl->dumpFrameToFile(frame->video.video.frame, HAL_DUMP_FRM_VIDEO);
     mHalCamCtrl->mCallbackLock.lock();
     camera_data_timestamp_callback rcb = mHalCamCtrl->mDataCbTimestamp;
-    void *rdata = mHalCamCtrl->mCallbackCookie;
     mHalCamCtrl->mCallbackLock.unlock();
 
 	nsecs_t timeStamp = nsecs_t(frame->video.video.frame->ts.tv_sec)*1000000000LL + \
@@ -341,6 +346,15 @@ status_t QCameraStream_record::processRecordFrame(void *data)
 
   ALOGV("Send Video frame to services/encoder TimeStamp : %lld",timeStamp);
   mRecordedFrames[frame->video.video.idx] = *frame;
+
+#ifdef USE_NATIVE_HANDLE_SOURCE
+  if (mHalCamCtrl->mStoreMetaDataInFrame) {
+    media_metadata_buffer *packet = (media_metadata_buffer *)
+      mHalCamCtrl->mRecordingMemory.metadata_memory[frame->video.video.idx]->data;
+    packet->meta_handle = mNativeHandle[frame->video.video.idx];
+    packet->buffer_type = kMetadataBufferTypeNativeHandleSource;
+  }
+#endif
 
 #ifdef USE_ION
   struct ion_flush_data cache_inv_data;
@@ -452,21 +466,27 @@ status_t QCameraStream_record::initEncodeBuffers()
 #endif
 		  mHalCamCtrl->mRecordingMemory.camera_memory[cnt] =
 		    mHalCamCtrl->mGetMemory(mHalCamCtrl->mRecordingMemory.fd[cnt],
-		    mHalCamCtrl->mRecordingMemory.size, 1, (void *)this);
+		    mHalCamCtrl->mRecordingMemory.size, 1, mHalCamCtrl->mCallbackCookie);
 
       if (mHalCamCtrl->mStoreMetaDataInFrame) {
+        // create native handle
+        mNativeHandle[cnt] = native_handle_create(1, 2); // 1 fd, 1 offset and 1 size
+        mNativeHandle[cnt]->data[0] = mHalCamCtrl->mRecordingMemory.fd[cnt];
+        mNativeHandle[cnt]->data[1] = 0;
+        mNativeHandle[cnt]->data[2] = mHalCamCtrl->mRecordingMemory.size;
+
+        // assign native handle
         mHalCamCtrl->mRecordingMemory.metadata_memory[cnt] =
-          mHalCamCtrl->mGetMemory(-1,
-          sizeof(struct encoder_media_buffer_type), 1, (void *)this);
-        struct encoder_media_buffer_type * packet =
-          (struct encoder_media_buffer_type  *)
-          mHalCamCtrl->mRecordingMemory.metadata_memory[cnt]->data;
-        packet->meta_handle = native_handle_create(1, 2); //1 fd, 1 offset and 1 size
+            mHalCamCtrl->mGetMemory(-1, sizeof(media_metadata_buffer), 1,
+            mHalCamCtrl->mCallbackCookie);
+        media_metadata_buffer *packet = (media_metadata_buffer *)
+            mHalCamCtrl->mRecordingMemory.metadata_memory[cnt]->data;
+        packet->meta_handle = mNativeHandle[cnt];
+#ifdef USE_NATIVE_HANDLE_SOURCE
+        packet->buffer_type = kMetadataBufferTypeNativeHandleSource;
+#else
         packet->buffer_type = kMetadataBufferTypeCameraSource;
-        native_handle_t * nh = const_cast<native_handle_t *>(packet->meta_handle);
-        nh->data[0] = mHalCamCtrl->mRecordingMemory.fd[cnt];
-        nh->data[1] = 0;
-        nh->data[2] = mHalCamCtrl->mRecordingMemory.size;
+#endif
       }
     	recordframes[cnt].fd = mHalCamCtrl->mRecordingMemory.fd[cnt];
     	recordframes[cnt].buffer = (uint32_t)mHalCamCtrl->mRecordingMemory.camera_memory[cnt]->data;
@@ -534,6 +554,17 @@ void QCameraStream_record::releaseRecordingFrame(const void *opaque)
             /* found the match */
             if(MM_CAMERA_OK != cam_evt_buf_done(mCameraId, &mRecordedFrames[cnt]))
                 ALOGE("%s : Buf Done Failed",__func__);
+#ifdef HAL_CLOSE_NATIVE_HANDLES
+            media_metadata_buffer *packet = (media_metadata_buffer *)
+                mHalCamCtrl->mRecordingMemory.metadata_memory[cnt]->data;
+            if (packet && packet->buffer_type == kMetadataBufferTypeNativeHandleSource) {
+              native_handle_t *nh = const_cast<native_handle_t *>(packet->meta_handle);
+              if (nh) {
+                native_handle_close(nh);
+                native_handle_delete(nh);
+              }
+            }
+#endif
             ALOGV("%s : END",__func__);
             return;
         }

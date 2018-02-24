@@ -259,7 +259,7 @@ typedef struct {
 } mm_camera_obj_t;
 
 #define MM_CAMERA_DEV_NAME_LEN 32
-#define MM_CAMERA_DEV_OPEN_TRIES 2
+#define MM_CAMERA_DEV_OPEN_TRIES 20
 #define MM_CAMERA_DEV_OPEN_RETRY_SLEEP 20
 
 typedef struct {
@@ -312,11 +312,10 @@ extern int mm_camera_poll_thread_release(mm_camera_obj_t * my_obj, int ch_type);
 extern void mm_camera_poll_threads_init(mm_camera_obj_t * my_obj);
 extern void mm_camera_poll_threads_deinit(mm_camera_obj_t * my_obj);
 extern int mm_camera_poll_busy(mm_camera_obj_t * my_obj);
-extern void mm_camera_msm_data_notify(mm_camera_obj_t * my_obj, int fd,
+extern void mm_camera_msm_data_notify(mm_camera_obj_t * my_obj,
                                             mm_camera_stream_type_t stream_type);
 extern void mm_camera_msm_evt_notify(mm_camera_obj_t * my_obj, int fd);
-extern int mm_camera_read_msm_frame(mm_camera_obj_t * my_obj,
-                        mm_camera_stream_t *stream);
+extern int mm_camera_read_msm_frame(mm_camera_stream_t *stream);
 extern int32_t mm_camera_ch_acquire(mm_camera_obj_t *my_obj, mm_camera_channel_type_t ch_type);
 extern void mm_camera_ch_release(mm_camera_obj_t *my_obj, mm_camera_channel_type_t ch_type);
 extern int mm_camera_ch_is_active(mm_camera_obj_t * my_obj, mm_camera_channel_type_t ch_type);
@@ -324,9 +323,7 @@ extern void mm_camera_ch_util_get_stream_objs(mm_camera_obj_t * my_obj,
                                                             mm_camera_channel_type_t ch_type,
                                                             mm_camera_stream_t **stream1,
                                                             mm_camera_stream_t **stream2);
-extern int mm_camera_stream_qbuf(mm_camera_obj_t * my_obj,
-                                                            mm_camera_stream_t *stream,
-                                                            int idx);
+extern int mm_camera_stream_qbuf(mm_camera_stream_t *stream, int idx);
 extern int mm_camera_stream_frame_get_q_cnt(mm_camera_frame_queue_t *q);
 extern mm_camera_frame_t *mm_camera_stream_frame_deq(mm_camera_frame_queue_t *q);
 extern mm_camera_frame_t *mm_camera_stream_frame_deq_no_lock(mm_camera_frame_queue_t *q);
@@ -334,11 +331,8 @@ extern void mm_camera_stream_frame_enq(mm_camera_frame_queue_t *q, mm_camera_fra
 extern void mm_camera_stream_frame_enq_no_lock(mm_camera_frame_queue_t *q, mm_camera_frame_t *node);
 extern void mm_camera_stream_frame_refill_q(mm_camera_frame_queue_t *q, mm_camera_frame_t *node, int num);
 extern int mm_camera_stream_is_active(mm_camera_stream_t *stream);
-extern int32_t mm_camera_stream_util_buf_done(mm_camera_obj_t * my_obj,
-                    mm_camera_stream_t *stream,
+extern int32_t mm_camera_stream_util_buf_done(mm_camera_stream_t *stream,
                     mm_camera_notify_frame_t *frame);
-//extern int mm_camera_poll_add_stream(mm_camera_obj_t * my_obj, mm_camera_stream_t *stream);
-//extern int mm_camera_poll_del_stream(mm_camera_obj_t * my_obj, mm_camera_stream_t *stream);
 extern int mm_camera_dev_open(int *fd, char *dev_name);
 extern int mm_camera_reg_event(mm_camera_obj_t * my_obj, mm_camera_event_notify_t evt_cb,
                            void *user_data, uint32_t evt_type);

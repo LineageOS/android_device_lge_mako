@@ -276,7 +276,7 @@ typedef struct {
     /* if the parm is supported */
     uint8_t (*is_parm_supported)(mm_camera_t *camera, mm_camera_parm_type_t parm_type);
     /* if the channel is supported */
-    uint8_t (*is_ch_supported)(mm_camera_t *camera, mm_camera_channel_type_t ch_type);
+    uint8_t (*is_ch_supported)(mm_camera_channel_type_t ch_type);
     /* set a parm’s current value */
     int32_t (*set_parm)(mm_camera_t *camera, mm_camera_parm_type_t parm_type,
           void* p_value);
@@ -348,8 +348,7 @@ typedef void (*mm_camera_buf_notify_t)(mm_camera_ch_data_buf_t *bufs,
     void *user_data);
 
 typedef struct {
-    uint8_t (*is_event_supported)(mm_camera_t * camera,
-                                 mm_camera_event_type_t evt_type);
+    uint8_t (*is_event_supported)(mm_camera_event_type_t evt_type);
     int32_t (*register_event_notify)(mm_camera_t * camera,
                                     mm_camera_event_notify_t evt_cb,
                                      void * user_data,
@@ -412,23 +411,10 @@ typedef struct {
 typedef void (*mm_camera_jpeg_cb_t)(mm_camera_jpeg_encode_t *result,
     void *user_data);
 
-typedef struct {
-    uint8_t (*is_jpeg_supported)( mm_camera_t * camera);
-    int32_t (*set_parm)(mm_camera_t * camera, mm_camera_jpeg_parm_type_t parm_type,
-             void* p_value);
-    int32_t (*get_parm)(mm_camera_t * camera, mm_camera_jpeg_parm_type_t parm_type,
-                        void* p_value);
-    int32_t (* register_event_cb)(mm_camera_t * camera, mm_camera_jpeg_cb_t * evt_cb,
-             void * user_data);
-    int32_t (*encode)(mm_camera_t * camera, uint8_t start,
-        mm_camera_jpeg_encode_t *data);
-} mm_camera_jpeg_t;
-
 struct mm_camera {
     mm_camera_config_t *cfg;                // config interface
     mm_camera_ops_t *ops;                   // operation interface
     mm_camera_notify_t *evt;                // evt callback interface
-    mm_camera_jpeg_t *jpeg_ops;         // jpeg config and encoding interface
     qcamera_info_t camera_info;      // postion, mount_angle, etc.
     enum sensor_type_t sensor_type; // BAYER, YUV, JPEG_SOC, etc.
     char video_dev_name[32];           // device node name, e.g. /dev/video1
@@ -495,17 +481,6 @@ int32_t cam_evt_register_buf_notify(int cam_id,
   void * user_data);
 
 int32_t cam_evt_buf_done(int cam_id, mm_camera_ch_data_buf_t *bufs);
-
-/*camera JPEG methods*/
-uint8_t cam_jpeg_is_jpeg_supported(int cam_id);
-int32_t cam_jpeg_set_parm(int cam_id, mm_camera_jpeg_parm_type_t parm_type,
-  void* p_value);
-int32_t cam_jpeg_get_parm(int cam_id, mm_camera_jpeg_parm_type_t parm_type,
-  void* p_value);
-int32_t cam_jpeg_register_event_cb(int cam_id, mm_camera_jpeg_cb_t * evt_cb,
-  void * user_data);
-int32_t cam_jpeg_encode(int cam_id, uint8_t start,
-  mm_camera_jpeg_encode_t *data);
 
 extern mm_camera_t * mm_camera_query(uint8_t *num_cameras);
 extern uint8_t *mm_camera_do_mmap(uint32_t size, int *pmemFd);

@@ -99,16 +99,10 @@ public:
     //static status_t     openChannel(mm_camera_t *, mm_camera_channel_type_t ch_type);
     virtual status_t    initChannel(int cameraId, uint32_t ch_type_mask);
     virtual status_t    deinitChannel(int cameraId, mm_camera_channel_type_t ch_type);
-    virtual void releaseRecordingFrame(const void *opaque)
+    virtual void releaseRecordingFrame(const void *opaque __unused)
     {
       ;
     }
-#if 0 // mzhu
-    virtual status_t getBufferInfo(sp<IMemory>& Frame, size_t *alignedSize)
-    {
-      return NO_ERROR;
-    }
-#endif // mzhu
     virtual void prepareHardware()
     {
       ;
@@ -120,19 +114,21 @@ public:
     virtual void *getLastQueuedFrame(void){return NULL;}
     virtual status_t takePictureZSL(void){return NO_ERROR;}
     virtual status_t takeLiveSnapshot(){return NO_ERROR;}
-    virtual status_t takePictureLiveshot(mm_camera_ch_data_buf_t* recvd_frame){return NO_ERROR;}
-	virtual void setModeLiveSnapshot(bool){;}
-    virtual status_t initSnapshotBuffers(cam_ctrl_dimension_t *dim,
-                                 int num_of_buf){return NO_ERROR;}
+    virtual status_t takePictureLiveshot(mm_camera_ch_data_buf_t* recvd_frame __unused){return NO_ERROR;}
+    virtual void setModeLiveSnapshot(bool){;}
+    virtual status_t initSnapshotBuffers(cam_ctrl_dimension_t *dim __unused,
+                                 int num_of_buf __unused){return NO_ERROR;}
 
     virtual void setFullSizeLiveshot(bool){};
     /* Set the ANativeWindow */
-    virtual int setPreviewWindow(preview_stream_ops_t* window) {return NO_ERROR;}
-    virtual void notifyROIEvent(fd_roi_t roi) {;}
-    virtual void notifyWDenoiseEvent(cam_ctrl_status_t status, void * cookie) {};
+    virtual int setPreviewWindow(preview_stream_ops_t* window __unused) {return NO_ERROR;}
+    virtual void notifyROIEvent(fd_roi_t roi __unused) {;}
+    virtual void notifyWDenoiseEvent(cam_ctrl_status_t status __unused,
+        void * cookie __unused) {};
     virtual void resetSnapshotCounters(void ){};
-    virtual void InitHdrInfoForSnapshot(bool HDR_on, int number_frames, int *exp ) {};
-    virtual void notifyHdrEvent(cam_ctrl_status_t status, void * cookie) {};
+    virtual void InitHdrInfoForSnapshot(bool HDR_on __unused,
+        int number_frames __unused, int *exp __unused) {};
+    virtual void notifyHdrEvent(cam_ctrl_status_t status __unused) {};
 
     QCameraStream();
     QCameraStream(int, camera_mode_t);
@@ -143,6 +139,7 @@ public:
     int mCameraId;
     camera_mode_t myMode;
 
+    mutable Mutex mStartCallbackLock;
     mutable Mutex mStopCallbackLock;
     mutable Mutex mPreviewFrameLock;
 	int     mSnapshotDataCallingBack;
@@ -197,6 +194,7 @@ private:
   mm_camera_ch_data_buf_t          mRecordedFrames[MM_CAMERA_MAX_NUM_FRAMES];
   //Mutex                            mRecordFreeQueueLock;
   //Vector<mm_camera_ch_data_buf_t>  mRecordFreeQueue;
+  native_handle_t *mNativeHandle[MM_CAMERA_MAX_NUM_FRAMES];
 
   int mJpegMaxSize;
   QCameraStream *mStreamSnap;
@@ -234,7 +232,6 @@ private:
     status_t                 getBufferFromSurface();
     status_t                 putBufferToSurface();
 
-    void                     dumpFrameToFile(struct msm_frame* newFrame);
     bool                     mFirstFrameRcvd;
 
     int8_t                   my_id;
@@ -266,21 +263,21 @@ public:
     status_t takePictureZSL(void);
     status_t takePictureLiveshot(mm_camera_ch_data_buf_t* recvd_frame);
     status_t receiveRawPicture(mm_camera_ch_data_buf_t* recvd_frame);
-    void receiveCompleteJpegPicture(jpeg_event_t event);
-	void jpegErrorHandler(jpeg_event_t event);
+    void receiveCompleteJpegPicture();
+	void jpegErrorHandler();
     void receiveJpegFragment(uint8_t *ptr, uint32_t size);
     void deInitBuffer(void);
     sp<IMemoryHeap> getRawHeap() const;
     int getSnapshotState();
     /*Temp: to be removed once event handling is enabled in mm-camera*/
-    void runSnapshotThread(void *data);
+    void runSnapshotThread();
     bool isZSLMode();
     void setFullSizeLiveshot(bool);
     void notifyWDenoiseEvent(cam_ctrl_status_t status, void * cookie);
     friend void liveshot_callback(mm_camera_ch_data_buf_t *frame,void *user_data);
     void resetSnapshotCounters(void );
     void InitHdrInfoForSnapshot(bool HDR_on, int number_frames, int *exp );
-    void notifyHdrEvent(cam_ctrl_status_t status, void * cookie);
+    void notifyHdrEvent(cam_ctrl_status_t status);
     bool getSnapJpegCbState(void);
     void setSnapJpegCbState(bool state);
 
@@ -294,8 +291,7 @@ private:
     status_t initZSLSnapshot(void);
     status_t initFullLiveshot(void);
 	status_t cancelPicture();
-    void notifyShutter(common_crop_t *crop,
-                       bool play_shutter_sound);
+    void notifyShutter(bool play_shutter_sound);
     status_t initSnapshotBuffers(cam_ctrl_dimension_t *dim,
                                  int num_of_buf);
     status_t initRawSnapshotBuffers(cam_ctrl_dimension_t *dim,
@@ -310,10 +306,7 @@ private:
     status_t startStreamZSL(void);
     void deinitSnapshotChannel(mm_camera_channel_type_t);
     status_t configSnapshotDimension(cam_ctrl_dimension_t* dim);
-    status_t encodeData(mm_camera_ch_data_buf_t* recvd_frame,
-                        common_crop_t *crop_info,
-                        int frame_len,
-                        bool enqueued);
+    status_t encodeData(mm_camera_ch_data_buf_t* recvd_frame, bool enqueued);
     status_t encodeDisplayAndSave(mm_camera_ch_data_buf_t* recvd_frame,
                                   bool enqueued);
     status_t setZSLChannelAttribute(void);

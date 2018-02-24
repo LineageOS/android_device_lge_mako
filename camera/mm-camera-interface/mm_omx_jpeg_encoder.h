@@ -63,8 +63,8 @@ int8_t mm_jpeg_encoder_setThumbnailQuality(uint32_t quality);
 int8_t mm_jpeg_encoder_setRotation(int rotation,int isZSL);
 void jpege_set_phy_offset(uint32_t a_phy_offset);
 int8_t mm_jpeg_encoder_get_buffer_offset(uint32_t width, uint32_t height,
-    uint32_t* p_y_offset, uint32_t* p_cbcr_offset,
-    uint32_t* p_buf_size,uint8_t *num_planes,
+    int32_t* p_y_offset, int32_t* p_cbcr_offset,
+    int32_t* p_buf_size,uint8_t *num_planes,
     uint32_t planes[]);
 typedef void (*jpegfragment_callback_t)(uint8_t * buff_ptr,
     uint32_t buff_size, void* user_data);

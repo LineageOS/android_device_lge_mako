@@ -28,7 +28,7 @@
  */
 
 #ifndef _OMXLOG_H
-#define _OMXGLOG_H
+#define _OMXLOG_H
 
 #define OMX_DBG_ERROR_ENABLE 1
 #define OMX_DBG_WARNG_ENABLE 0

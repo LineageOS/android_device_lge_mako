@@ -35,6 +35,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <poll.h>
+#include <string.h>
 #include <linux/msm_ion.h>
 #include "mm_camera_interface2.h"
 #include "mm_camera.h"
@@ -48,7 +49,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 static void mm_camera_read_raw_frame(mm_camera_obj_t * my_obj)
 {
-    int rc = 0;
     int idx;
     int i;
     int cnt = 0;
@@ -57,7 +57,7 @@ static void mm_camera_read_raw_frame(mm_camera_obj_t * my_obj)
     mm_camera_ch_data_buf_t data[MM_CAMERA_BUF_CB_MAX];
 
     stream = &my_obj->ch[MM_CAMERA_CH_RAW].raw.stream;
-    idx =  mm_camera_read_msm_frame(my_obj, stream);
+    idx =  mm_camera_read_msm_frame(stream);
     if (idx < 0) {
         return;
     }
@@ -172,8 +172,7 @@ int mm_camera_zsl_frame_cmp_and_enq(mm_camera_obj_t * my_obj,
                     peer_frame_tmp = mm_camera_stream_frame_deq_no_lock(peerq);
                     notify_frame.frame = &peer_frame_tmp->frame;
                     notify_frame.idx = peer_frame_tmp->idx;
-                    mm_camera_stream_util_buf_done(my_obj, peerstream,
-                                                   &notify_frame);
+                    mm_camera_stream_util_buf_done(peerstream, &notify_frame);
                     peer_frame = peerq->head;
                     peer_frame_prev = NULL;
                     continue;
@@ -187,8 +186,7 @@ int mm_camera_zsl_frame_cmp_and_enq(mm_camera_obj_t * my_obj,
                     }
                     notify_frame.frame = &peer_frame_tmp->frame;
                     notify_frame.idx = peer_frame_tmp->idx;
-                    mm_camera_stream_util_buf_done(my_obj, peerstream,
-                                                   &notify_frame);
+                    mm_camera_stream_util_buf_done(peerstream, &notify_frame);
                     peer_frame = peer_frame_prev->next;
                     peerq->cnt--;
                     continue;
@@ -200,7 +198,7 @@ int mm_camera_zsl_frame_cmp_and_enq(mm_camera_obj_t * my_obj,
                      "Drop the current frame.", __func__);
                 notify_frame.frame = &node->frame;
                 notify_frame.idx = node->idx;
-                mm_camera_stream_util_buf_done(my_obj, mystream, &notify_frame);
+                mm_camera_stream_util_buf_done(mystream, &notify_frame);
                 goto end;
             }
         }
@@ -213,7 +211,7 @@ int mm_camera_zsl_frame_cmp_and_enq(mm_camera_obj_t * my_obj,
                     mystream->fd, node->frame.frame_id);
         notify_frame.frame = &node->frame;
         notify_frame.idx = node->idx;
-        mm_camera_stream_util_buf_done(my_obj, mystream, &notify_frame);
+        mm_camera_stream_util_buf_done(mystream, &notify_frame);
     }
 water_mark:
     while((myq->match_cnt > watermark) && (peerq->match_cnt > watermark)) {
@@ -227,12 +225,12 @@ water_mark:
                    "peer frame idx %d id = %d", __func__,
                    myq->match_cnt, watermark, notify_frame.idx,
                    notify_frame.frame->frame_id);
-        mm_camera_stream_util_buf_done(my_obj, peerstream, &notify_frame);
+        mm_camera_stream_util_buf_done(peerstream, &notify_frame);
         peerq->match_cnt--;
         peer_frame_tmp = mm_camera_stream_frame_deq_no_lock(myq);
         notify_frame.frame = &peer_frame_tmp->frame;
         notify_frame.idx = peer_frame_tmp->idx;
-        mm_camera_stream_util_buf_done(my_obj, mystream, &notify_frame);
+        mm_camera_stream_util_buf_done(mystream, &notify_frame);
         myq->match_cnt--;
     }
 end:
@@ -255,8 +253,7 @@ end:
                     CDBG("%s Head Issuing buf_done on my frame idx %d id %d",
                          __func__, notify_frame.idx,
                          notify_frame.frame->frame_id);
-                    mm_camera_stream_util_buf_done(my_obj, mystream,
-                                                   &notify_frame);
+                    mm_camera_stream_util_buf_done(mystream, &notify_frame);
                 } else {
                     /* this is not the head. */
                     peer_frame_tmp = peer_frame;
@@ -270,8 +267,7 @@ end:
                     CDBG("%s Issuing buf_done on my frame idx %d id = %d",
                          __func__, notify_frame.idx,
                          notify_frame.frame->frame_id);
-                    mm_camera_stream_util_buf_done(my_obj, mystream,
-                                                   &notify_frame);
+                    mm_camera_stream_util_buf_done(mystream, &notify_frame);
                     myq->cnt--;
                 }
                 break;
@@ -301,8 +297,7 @@ end:
                     CDBG("%s Head Issuing buf_done on peer frame idx %d "
                          "id = %d", __func__, notify_frame.idx,
                          notify_frame.frame->frame_id);
-                    mm_camera_stream_util_buf_done(my_obj, peerstream,
-                                                   &notify_frame);
+                    mm_camera_stream_util_buf_done(peerstream, &notify_frame);
                 } else {
                     /* this is not the head. */
                     peer_frame_tmp = peer_frame;
@@ -316,8 +311,7 @@ end:
                     CDBG("%s Issuing buf_done on peer frame idx %d id = %d",
                          __func__, notify_frame.idx,
                          notify_frame.frame->frame_id);
-                    mm_camera_stream_util_buf_done(my_obj, peerstream,
-                                                   &notify_frame);
+                    mm_camera_stream_util_buf_done(peerstream, &notify_frame);
                     peerq->cnt--;
                 }
                 break;
@@ -387,7 +381,6 @@ send_to_hal:
 
 static void mm_camera_read_preview_frame(mm_camera_obj_t * my_obj)
 {
-    int rc = 0;
     int idx;
     int i;
     int cnt = 0;
@@ -400,7 +393,7 @@ static void mm_camera_read_preview_frame(mm_camera_obj_t * my_obj)
         return;
     }
     stream = &my_obj->ch[MM_CAMERA_CH_PREVIEW].preview.stream;
-    idx =  mm_camera_read_msm_frame(my_obj, stream);
+    idx =  mm_camera_read_msm_frame(stream);
     if (idx < 0) {
         return;
     }
@@ -567,7 +560,6 @@ static void mm_camera_snapshot_send_snapshot_notify(mm_camera_obj_t * my_obj)
 
 static void mm_camera_read_snapshot_main_frame(mm_camera_obj_t * my_obj)
 {
-    int rc = 0;
     int idx;
     mm_camera_stream_t *stream;
     mm_camera_frame_queue_t *q;
@@ -577,7 +569,7 @@ static void mm_camera_read_snapshot_main_frame(mm_camera_obj_t * my_obj)
     }
     q = &my_obj->ch[MM_CAMERA_CH_SNAPSHOT].snapshot.main.frame.readyq;
     stream = &my_obj->ch[MM_CAMERA_CH_SNAPSHOT].snapshot.main;
-    idx =  mm_camera_read_msm_frame(my_obj,stream);
+    idx =  mm_camera_read_msm_frame(stream);
     if (idx < 0)
         return;
 
@@ -610,24 +602,21 @@ static void mm_camera_read_snapshot_thumbnail_frame(mm_camera_obj_t * my_obj)
     }
     q = &my_obj->ch[MM_CAMERA_CH_SNAPSHOT].snapshot.thumbnail.frame.readyq;
     stream = &my_obj->ch[MM_CAMERA_CH_SNAPSHOT].snapshot.thumbnail;
-    idx =  mm_camera_read_msm_frame(my_obj,stream);
+    idx =  mm_camera_read_msm_frame(stream);
     if (idx < 0)
         return;
     if(my_obj->op_mode != MM_CAMERA_OP_MODE_ZSL) {
         mm_camera_stream_frame_enq(q, &stream->frame.frame[idx]);
         mm_camera_snapshot_send_snapshot_notify(my_obj);
     } else {
-//        CDBG("%s: ZSL does not use thumbnail stream",  __func__);
-        rc = mm_camera_stream_qbuf(my_obj, stream, idx);
-//        CDBG("%s Q back thumbnail buffer rc = %d ", __func__, rc);
+        rc = mm_camera_stream_qbuf(stream, idx);
     }
 }
 
 static void mm_camera_read_video_frame(mm_camera_obj_t * my_obj)
 {
-    int idx, rc = 0;
+    int idx;
     mm_camera_stream_t *stream;
-    mm_camera_frame_queue_t *q;
     int i;
     int cnt = 0;
     mm_camera_buf_cb_t buf_cb[MM_CAMERA_BUF_CB_MAX];
@@ -638,7 +627,7 @@ static void mm_camera_read_video_frame(mm_camera_obj_t * my_obj)
         return;
     }
     stream = &my_obj->ch[MM_CAMERA_CH_VIDEO].video.video;
-    idx =  mm_camera_read_msm_frame(my_obj,stream);
+    idx =  mm_camera_read_msm_frame(stream);
     if (idx < 0)
         return;
 
@@ -685,78 +674,7 @@ static void mm_camera_read_video_frame(mm_camera_obj_t * my_obj)
     ALOGV("Video thread unlocked");
 }
 
-static void mm_camera_read_video_main_frame(mm_camera_obj_t * my_obj)
-{
-    int rc = 0;
-    return;rc;
-}
-
-static void mm_camera_read_zsl_main_frame(mm_camera_obj_t * my_obj)
-{
-    int idx, rc = 0;
-    mm_camera_stream_t *stream;
-    mm_camera_frame_queue_t *q;
-    mm_camera_frame_t *frame;
-    int cnt, watermark;
-
-    q =   &my_obj->ch[MM_CAMERA_CH_SNAPSHOT].snapshot.main.frame.readyq;
-    stream = &my_obj->ch[MM_CAMERA_CH_SNAPSHOT].snapshot.main;
-    idx =  mm_camera_read_msm_frame(my_obj,stream);
-    if (idx < 0)
-        return;
-
-    CDBG("%s: Enqueuing frame id: %d", __func__, idx);
-    mm_camera_stream_frame_enq(q, &stream->frame.frame[idx]);
-    cnt = mm_camera_stream_frame_get_q_cnt(q);
-    watermark = my_obj->ch[MM_CAMERA_CH_SNAPSHOT].buffering_frame.water_mark;
-
-    CDBG("%s: Watermark: %d Queue in a frame: %d", __func__, watermark, cnt);
-    if(watermark < cnt) {
-        /* water overflow, queue head back to kernel */
-        frame = mm_camera_stream_frame_deq(q);
-        if(frame) {
-            rc = mm_camera_stream_qbuf(my_obj, stream, frame->idx);
-            if(rc < 0) {
-                CDBG("%s: mm_camera_stream_qbuf(idx=%d) err=%d\n",
-                     __func__, frame->idx, rc);
-                return;
-            }
-        }
-    }
-    mm_camera_check_pending_zsl_frames(my_obj, MM_CAMERA_CH_SNAPSHOT);
-}
-
-static void mm_camera_read_zsl_postview_frame(mm_camera_obj_t * my_obj)
-{
-    int idx, rc = 0;
-    mm_camera_stream_t *stream;
-    mm_camera_frame_queue_t *q;
-    mm_camera_frame_t *frame;
-    int cnt, watermark;
-    q = &my_obj->ch[MM_CAMERA_CH_SNAPSHOT].snapshot.thumbnail.frame.readyq;
-    stream = &my_obj->ch[MM_CAMERA_CH_SNAPSHOT].snapshot.thumbnail;
-    idx =  mm_camera_read_msm_frame(my_obj,stream);
-    if (idx < 0)
-        return;
-    mm_camera_stream_frame_enq(q, &stream->frame.frame[idx]);
-    watermark = my_obj->ch[MM_CAMERA_CH_SNAPSHOT].buffering_frame.water_mark;
-    cnt = mm_camera_stream_frame_get_q_cnt(q);
-    if(watermark < cnt) {
-        /* water overflow, queue head back to kernel */
-        frame = mm_camera_stream_frame_deq(q);
-        if(frame) {
-            rc = mm_camera_stream_qbuf(my_obj, stream, frame->idx);
-            if(rc < 0) {
-                CDBG("%s: mm_camera_stream_qbuf(idx=%d) err=%d\n",
-                     __func__, frame->idx, rc);
-                return;
-            }
-        }
-    }
-    mm_camera_check_pending_zsl_frames(my_obj, MM_CAMERA_CH_SNAPSHOT);
-}
-
-void mm_camera_msm_data_notify(mm_camera_obj_t * my_obj, int fd,
+void mm_camera_msm_data_notify(mm_camera_obj_t * my_obj,
                                mm_camera_stream_type_t stream_type)
 {
     switch(stream_type) {
@@ -775,28 +693,8 @@ void mm_camera_msm_data_notify(mm_camera_obj_t * my_obj, int fd,
     case MM_CAMERA_STREAM_VIDEO:
         mm_camera_read_video_frame(my_obj);
         break;
-    case MM_CAMERA_STREAM_VIDEO_MAIN:
-        mm_camera_read_video_main_frame(my_obj);
-        break;
     default:
         break;
-    }
-}
-
-static mm_camera_channel_type_t mm_camera_image_mode_to_ch(int image_mode)
-{
-    switch(image_mode) {
-    case MSM_V4L2_EXT_CAPTURE_MODE_PREVIEW:
-        return MM_CAMERA_CH_PREVIEW;
-    case MSM_V4L2_EXT_CAPTURE_MODE_MAIN:
-    case MSM_V4L2_EXT_CAPTURE_MODE_THUMBNAIL:
-        return MM_CAMERA_CH_SNAPSHOT;
-    case MSM_V4L2_EXT_CAPTURE_MODE_VIDEO:
-        return MM_CAMERA_CH_VIDEO;
-    case MSM_V4L2_EXT_CAPTURE_MODE_RAW:
-        return MM_CAMERA_CH_RAW;
-    default:
-        return MM_CAMERA_CH_MAX;
     }
 }
 

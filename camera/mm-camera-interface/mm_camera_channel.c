@@ -36,6 +36,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <poll.h>
+#include <string.h>
 #include "mm_camera_interface2.h"
 #include "mm_camera.h"
 
@@ -43,31 +44,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #undef CDBG
 #define CDBG ALOGV
 #endif
-/* static functions prototype declarations */
-static int mm_camera_channel_skip_frames(mm_camera_obj_t *my_obj,
-                                          mm_camera_frame_queue_t *mq,
-                                          mm_camera_frame_queue_t *sq,
-                                          mm_camera_stream_t *mstream,
-                                          mm_camera_stream_t *sstream,
-                                          mm_camera_channel_attr_buffering_frame_t *frame_attr);
-static int mm_camera_channel_get_starting_frame(mm_camera_obj_t *my_obj,
-                                                mm_camera_ch_t *ch,
-                                                mm_camera_stream_t *mstream,
-                                                mm_camera_stream_t *sstream,
-                                                mm_camera_frame_queue_t *mq,
-                                                mm_camera_frame_queue_t *sq,
-                                                mm_camera_frame_t **mframe,
-                                                mm_camera_frame_t **sframe);
-static int mm_camera_ch_search_frame_based_on_time(mm_camera_obj_t *my_obj,
-                                                   mm_camera_ch_t *ch,
-                                                   mm_camera_stream_t *mstream,
-                                                   mm_camera_stream_t *sstream,
-                                                   mm_camera_frame_queue_t *mq,
-                                                   mm_camera_frame_queue_t *sq,
-                                                   mm_camera_frame_t **mframe,
-                                                   mm_camera_frame_t **sframe);
-
-
 
 int mm_camera_ch_util_get_num_stream(mm_camera_obj_t * my_obj,mm_camera_channel_type_t ch_type)
 {
@@ -249,7 +225,7 @@ static int32_t mm_camera_ch_util_release(mm_camera_obj_t * my_obj,
 
 static int32_t mm_camera_ch_util_stream_null_val(mm_camera_obj_t * my_obj,
                                                  mm_camera_channel_type_t ch_type,
-                                                            mm_camera_state_evt_type_t evt, void *val)
+                                                            mm_camera_state_evt_type_t evt)
 {
         int32_t rc = 0;
         switch(ch_type) {
@@ -396,9 +372,11 @@ static int32_t mm_camera_ch_util_qbuf(mm_camera_obj_t *my_obj,
 {
     int32_t rc = -1;
     mm_camera_stream_t *stream;
+#ifdef USE_ION
     struct ion_flush_data cache_inv_data;
     struct ion_custom_data custom_data;
     int ion_fd;
+#endif
     struct msm_frame *cache_frame;
     struct msm_frame *cache_frame1 = NULL;
 
@@ -549,8 +527,7 @@ int mm_camera_channel_get_time_diff(struct timespec *cur_ts, int usec_target, st
     return dtusec;
 }
 
-static int mm_camera_channel_skip_frames(mm_camera_obj_t *my_obj,
-                                          mm_camera_frame_queue_t *mq,
+static int mm_camera_channel_skip_frames(mm_camera_frame_queue_t *mq,
                                           mm_camera_frame_queue_t *sq,
                                           mm_camera_stream_t *mstream,
                                           mm_camera_stream_t *sstream,
@@ -581,12 +558,12 @@ static int mm_camera_channel_skip_frames(mm_camera_obj_t *my_obj,
         if(mframe) {
             notify_frame.frame = &mframe->frame;
             notify_frame.idx = mframe->idx;
-            mm_camera_stream_util_buf_done(my_obj, mstream, &notify_frame);
+            mm_camera_stream_util_buf_done(mstream, &notify_frame);
         }
         if(sframe) {
             notify_frame.frame = &sframe->frame;
             notify_frame.idx = sframe->idx;
-            mm_camera_stream_util_buf_done(my_obj, sstream, &notify_frame);
+            mm_camera_stream_util_buf_done(sstream, &notify_frame);
         }
     }
 
@@ -599,7 +576,7 @@ static int mm_camera_channel_skip_frames(mm_camera_obj_t *my_obj,
 void mm_camera_dispatch_buffered_frames(mm_camera_obj_t *my_obj,
                                         mm_camera_channel_type_t ch_type)
 {
-    int mcnt, i, rc = MM_CAMERA_E_GENERAL, scnt;
+    int i, rc = MM_CAMERA_E_GENERAL;
     int num_of_req_frame = 0;
     int j;
     mm_camera_ch_data_buf_t data;
@@ -623,7 +600,7 @@ void mm_camera_dispatch_buffered_frames(mm_camera_obj_t *my_obj,
     pthread_mutex_lock(&my_obj->ch[MM_CAMERA_CH_PREVIEW].mutex);
     pthread_mutex_lock(&my_obj->ch[MM_CAMERA_CH_SNAPSHOT].mutex);
     if (mq && sq && stream1 && stream2) {
-        rc = mm_camera_channel_skip_frames(my_obj, mq, sq, stream1, stream2, &ch->buffering_frame);
+        rc = mm_camera_channel_skip_frames(mq, sq, stream1, stream2, &ch->buffering_frame);
         if(rc != MM_CAMERA_OK) {
             CDBG_ERROR("%s: Error getting right frame!", __func__);
             goto end;
@@ -724,7 +701,7 @@ int32_t mm_camera_ch_fn(mm_camera_obj_t * my_obj,
         rc = mm_camera_ch_util_reg_buf(my_obj, ch_type, evt, val);
         break;
     case MM_CAMERA_STATE_EVT_UNREG_BUF:
-        rc = mm_camera_ch_util_stream_null_val(my_obj, ch_type, evt, NULL);
+        rc = mm_camera_ch_util_stream_null_val(my_obj, ch_type, evt);
         break;
     case MM_CAMERA_STATE_EVT_STREAM_ON: {
         if(ch_type == MM_CAMERA_CH_RAW &&
@@ -736,7 +713,7 @@ int32_t mm_camera_ch_fn(mm_camera_obj_t * my_obj,
             }
         }
         mm_camera_poll_thread_add_ch(my_obj, ch_type);
-        rc = mm_camera_ch_util_stream_null_val(my_obj, ch_type, evt, NULL);
+        rc = mm_camera_ch_util_stream_null_val(my_obj, ch_type, evt);
         if(rc < 0) {
           CDBG_ERROR("%s: Failed in STREAM ON", __func__);
           mm_camera_poll_thread_release(my_obj, ch_type);
@@ -745,7 +722,7 @@ int32_t mm_camera_ch_fn(mm_camera_obj_t * my_obj,
     }
     case MM_CAMERA_STATE_EVT_STREAM_OFF: {
         mm_camera_poll_thread_del_ch(my_obj, ch_type);
-        rc = mm_camera_ch_util_stream_null_val(my_obj, ch_type, evt, NULL);
+        rc = mm_camera_ch_util_stream_null_val(my_obj, ch_type, evt);
         break;
     }
     case MM_CAMERA_STATE_EVT_QBUF:

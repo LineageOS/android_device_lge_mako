@@ -71,6 +71,7 @@ public:
                const char *name);
 };
 
+#ifndef USE_ION
 class PmemPool : public MemPool {
 public:
     PmemPool(const char *pmem_pool,
@@ -86,6 +87,7 @@ public:
     int mCameraControlFd;
     uint32_t mAlignedSize;
 };
+#endif
 
 class IonPool : public MemPool {
 public:

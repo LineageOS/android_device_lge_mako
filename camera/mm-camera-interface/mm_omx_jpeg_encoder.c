@@ -30,6 +30,8 @@
 #include <stdbool.h>
 #include <fcntl.h>
 #include <dlfcn.h>
+#include <stdlib.h>
+#include <string.h>
 #include "OMX_Types.h"
 #include "OMX_Index.h"
 #include "OMX_Core.h"
@@ -148,9 +150,9 @@ void set_callbacks(
 }
 
 
-OMX_ERRORTYPE etbdone(OMX_OUT OMX_HANDLETYPE hComponent,
-                      OMX_OUT OMX_PTR pAppData,
-                      OMX_OUT OMX_BUFFERHEADERTYPE* pBuffer)
+OMX_ERRORTYPE etbdone(OMX_OUT OMX_HANDLETYPE hComponent __unused,
+                      OMX_OUT OMX_PTR pAppData __unused,
+                      OMX_OUT OMX_BUFFERHEADERTYPE* pBuffer __unused)
 {
     pthread_mutex_lock(&lock);
     expectedEvent = OMX_EVENT_ETB_DONE;
@@ -161,8 +163,8 @@ OMX_ERRORTYPE etbdone(OMX_OUT OMX_HANDLETYPE hComponent,
     return 0;
 }
 
-OMX_ERRORTYPE ftbdone(OMX_OUT OMX_HANDLETYPE hComponent,
-                      OMX_OUT OMX_PTR pAppData,
+OMX_ERRORTYPE ftbdone(OMX_OUT OMX_HANDLETYPE hComponent __unused,
+                      OMX_OUT OMX_PTR pAppData __unused,
                       OMX_OUT OMX_BUFFERHEADERTYPE* pBuffer)
 {
     ALOGV("%s", __func__);
@@ -179,7 +181,8 @@ OMX_ERRORTYPE ftbdone(OMX_OUT OMX_HANDLETYPE hComponent,
     return 0;
 }
 
-OMX_ERRORTYPE handleError(OMX_IN OMX_EVENTTYPE eEvent, OMX_IN OMX_U32 error)
+OMX_ERRORTYPE handleError(OMX_IN OMX_EVENTTYPE eEvent __unused,
+                          OMX_IN OMX_U32 error)
 {
     ALOGV("%s", __func__);
     if (error == OMX_EVENT_JPEG_ERROR) {
@@ -196,10 +199,11 @@ OMX_ERRORTYPE handleError(OMX_IN OMX_EVENTTYPE eEvent, OMX_IN OMX_U32 error)
     return 0;
 }
 
-OMX_ERRORTYPE eventHandler( OMX_IN OMX_HANDLETYPE hComponent,
-                            OMX_IN OMX_PTR pAppData, OMX_IN OMX_EVENTTYPE eEvent,
+OMX_ERRORTYPE eventHandler( OMX_IN OMX_HANDLETYPE hComponent __unused,
+                            OMX_IN OMX_PTR pAppData __unused,
+                            OMX_IN OMX_EVENTTYPE eEvent,
                             OMX_IN OMX_U32 nData1, OMX_IN OMX_U32 nData2,
-                            OMX_IN OMX_PTR pEventData)
+                            OMX_IN OMX_PTR pEventData __unused)
 {
     ALOGV("%s", __func__);
     ALOGV("%s:got event %d ndata1 %u ndata2 %u", __func__,
@@ -233,7 +237,7 @@ void waitForEvent(int event, int value1, int value2 ){
 }
 
 int8_t mm_jpeg_encoder_get_buffer_offset(uint32_t width, uint32_t height,
-    uint32_t* p_y_offset, uint32_t* p_cbcr_offset, uint32_t* p_buf_size,
+    int32_t* p_y_offset, int32_t* p_cbcr_offset, int32_t* p_buf_size,
     uint8_t *num_planes, uint32_t planes[])
 {
     ALOGV("%s:", __func__);
@@ -242,12 +246,10 @@ int8_t mm_jpeg_encoder_get_buffer_offset(uint32_t width, uint32_t height,
     }
     *num_planes = 2;
     if (hw_encode ) {
-        int cbcr_offset = 0;
         uint32_t actual_size = width*height;
         uint32_t padded_size = width * CEILING16(height);
         *p_y_offset = 0;
         *p_cbcr_offset = 0;
-        //if(!isZSLMode){
         if ((jpegRotation == 90) || (jpegRotation == 180)) {
             *p_y_offset = padded_size - actual_size;
             *p_cbcr_offset = ((padded_size - actual_size) >> 1);
@@ -284,7 +286,7 @@ int8_t omxJpegOpen()
         pthread_mutex_unlock(&jpege_mutex);
         return false;
     }
-    OMX_ERRORTYPE ret = (*pOMX_GetHandle)(&pHandle, "OMX.qcom.image.jpeg.encoder",
+    (*pOMX_GetHandle)(&pHandle, "OMX.qcom.image.jpeg.encoder",
       NULL, &callbacks);
     pthread_mutex_unlock(&jpege_mutex);
     return true;
@@ -436,7 +438,6 @@ int8_t omxJpegEncode(omx_jpeg_encode_params *encode_params)
     int size = 0;
     uint8_t num_planes;
     uint32_t planes[10];
-    int orientation;
     ALOGV("%s:E", __func__);
 
     inputPort = malloc(sizeof(OMX_PARAM_PORTDEFINITIONTYPE));
@@ -513,12 +514,10 @@ int8_t omxJpegEncode(omx_jpeg_encode_params *encode_params)
     if(encode_params->a_cbcroffset > 0)
         inputPort1->nBufferSize = inputPort->nBufferSize;
 
-    userpreferences.color_format =
+    userpreferences.color_format = (omx_jpeg_color_format)
       get_jpeg_format_from_cam_format(encode_params->main_format);
-    userpreferences.thumbnail_color_format =
+    userpreferences.thumbnail_color_format = (omx_jpeg_color_format)
       get_jpeg_format_from_cam_format(encode_params->thumbnail_format);
-
-
 
 
       ALOGV("%s:Scaling params in1_w %d in1_h %d out1_w %d out1_h %d"
