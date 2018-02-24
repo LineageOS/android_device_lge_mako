@@ -33,21 +33,21 @@
 #define WFC_UTIL_CFG_FILE_NAME          "/data/misc/wifi/WCNSS_qcom_cfg.ini"
 #endif
 #ifndef WFC_UTIL_CFG_TEMPFILE_NAME
-#define WFC_UTIL_CFG_TEMPFILE_NAME      "/system/etc/wifi/WCNSS_qcom_cfg.ini"
+#define WFC_UTIL_CFG_TEMPFILE_NAME      "/vendor/etc/wifi/WCNSS_qcom_cfg.ini"
 #endif
 #else  /* WLAN_CHIP_VERSION_WCN1314 */
 #ifndef WFC_UTIL_CFG_FILE_NAME
 #define WFC_UTIL_CFG_FILE_NAME          "/data/misc/wifi/WCN1314_qcom_cfg.ini"
 #endif
 #ifndef WFC_UTIL_CFG_TEMPFILE_NAME
-#define WFC_UTIL_CFG_TEMPFILE_NAME      "/system/etc/wifi/WCN1314_qcom_cfg.ini"
+#define WFC_UTIL_CFG_TEMPFILE_NAME      "/vendor/etc/wifi/WCN1314_qcom_cfg.ini"
 #endif
 #endif /* WLAN_CHIP_VERSION_XXXX */
 
 #ifdef WFC_UTIL_FEAUTRE_COPY_NV_BIN
 #ifdef WLAN_CHIP_VERSION_WCNSS
 #ifndef WFC_UTIL_NV_BIN_TEMPFILE_NAME
-#define WFC_UTIL_NV_BIN_TEMPFILE_NAME   "/system/etc/wifi/WCNSS_qcom_wlan_nv.bin"
+#define WFC_UTIL_NV_BIN_TEMPFILE_NAME   "/vendor/etc/wifi/WCNSS_qcom_wlan_nv.bin"
 #endif
 #ifndef WFC_UTIL_NV_BIN_FILE_NAME
 #define WFC_UTIL_NV_BIN_FILE_NAME       "/data/misc/wifi/WCNSS_qcom_wlan_nv.bin"
