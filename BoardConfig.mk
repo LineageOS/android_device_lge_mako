@@ -58,10 +58,12 @@ BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 WIFI_DRIVER_FW_PATH_STA := "sta"
 WIFI_DRIVER_FW_PATH_AP  := "ap"
 
+# Display
 USE_OPENGL_RENDERER := true
 TARGET_USES_ION := true
 TARGET_USES_OVERLAY := true
 TARGET_USES_SF_BYPASS := true
+NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 
 # Dexpreopt
@@ -76,6 +78,7 @@ endif
 
 TARGET_RECOVERY_FSTAB = device/lge/mako/rootdir/etc/fstab.mako
 RECOVERY_FSTAB_VERSION = 2
+
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 23068672 # 22M
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 23068672 # 22M
@@ -84,6 +87,12 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 6189744128 # 5.9G
 BOARD_CACHEIMAGE_PARTITION_SIZE := 738197504 # 704 MByte
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
+
+# Reduce space taken by the journal
+BOARD_SYSTEMIMAGE_JOURNAL_SIZE := 0
+
+# Use mke2fs to create ext4 images
+TARGET_USES_MKE2FS := true
 
 BOARD_USES_SECURE_SERVICES := true
 
@@ -116,6 +125,8 @@ USE_MINIKIN := true
 # Include an expanded selection of fonts
 EXTENDED_FONT_FOOTPRINT := true
 
--include vendor/lge/mako/BoardConfigVendor.mk
+# Device manifest
+DEVICE_MANIFEST_FILE := device/lge/mako/manifest.xml
+DEVICE_MATRIX_FILE := device/lge/mako/compatibility_matrix.xml
 
-BOARD_HAS_NO_SELECT_BUTTON := true
+-include vendor/lge/mako/BoardConfigVendor.mk
