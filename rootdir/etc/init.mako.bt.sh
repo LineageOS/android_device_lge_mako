@@ -34,9 +34,9 @@ logi "DUTADDR : $DUTADDR"
 #load bd addr
 if [$DUTADDR == ""]
 then
-BDADDR=`/system/bin/bdAddrLoader -f /persist/bluetooth/.bdaddr -h -x`
+BDADDR=`/vendor/bin/bdAddrLoader -f /persist/bluetooth/.bdaddr -h -x`
 else
-BDADDR=`/system/bin/bdAddrLoader -p net.btdut.address -s -x`
+BDADDR=`/vendor/bin/bdAddrLoader -p net.btdut.address -s -x`
 fi
 
 setprop bluetooth.status off
@@ -57,9 +57,9 @@ esac
 
 if [$BDADDR == ""]
 then
-/system/bin/hci_qcomm_init -e $PWR_CLASS -vv
+/vendor/bin/hci_qcomm_init -e $PWR_CLASS -vv
 else
-/system/bin/hci_qcomm_init -b $BDADDR -e $PWR_CLASS -vv
+/vendor/bin/hci_qcomm_init -b $BDADDR -e $PWR_CLASS -vv
 fi
 
 case $? in
