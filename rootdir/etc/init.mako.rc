@@ -236,12 +236,12 @@ on post-fs-data
 service rmt_storage /vendor/bin/rmt_storage
     class core
     user root
-    group system
+    group system wakelock
 
 service hciattach /vendor/bin/init.mako.bt.sh
     class late_start
     user bluetooth
-    group qcom_oncrpc bluetooth net_bt_admin system
+    group qcom_oncrpc bluetooth system
     disabled
     oneshot
 
@@ -261,7 +261,7 @@ service bridgemgrd /vendor/bin/bridgemgrd
 service qmuxd /vendor/bin/qmuxd
     class main
     user radio
-    group radio audio bluetooth gps
+    group radio audio bluetooth gps wakelock
 
 service kickstart /vendor/bin/qcks -i /firmware/image/ -r /data/tombstones/mdm/
     class core
@@ -271,18 +271,18 @@ service kickstart /vendor/bin/qcks -i /firmware/image/ -r /data/tombstones/mdm/
 
 service netmgrd /vendor/bin/netmgrd
     class main
-    group radio
+    group radio system wakelock
 
 service sensors /vendor/bin/sensors.qcom
     class late_start
     user root
-    group root radio system
+    group root radio system wakelock
 
 service wpa_supplicant /vendor/bin/wpa_supplicant \
     -ip2p0 -Dnl80211 -c/data/misc/wifi/p2p_supplicant.conf \
-    -I/system/etc/wifi/p2p_supplicant_overlay.conf -N \
+    -I/vendor/etc/wifi/p2p_supplicant_overlay.conf -N \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
-    -I/system/etc/wifi/wpa_supplicant_overlay.conf \
+    -I/vendor/etc/wifi/wpa_supplicant_overlay.conf \
     -puse_p2p_group_interface=1 \
     -e/data/misc/wifi/entropy.bin -g@android:wpa_wlan0
 #   we will start as root and wpa_supplicant will switch to user wifi
@@ -298,10 +298,10 @@ on property:ro.data.large_tcp_window_size=true
     # Adjust socket buffer to enlarge TCP receive window for high bandwidth (e.g. DO-RevB)
     write /proc/sys/net/ipv4/tcp_adv_win_scale  2
 
-service charger /sbin/healthd -c
+service charger /charger
     class charger
     critical
-    seclabel u:r:healthd:s0
+    seclabel u:r:charger:s0
 
 service thermald /vendor/bin/thermald
     class main
