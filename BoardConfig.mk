@@ -79,9 +79,6 @@ ifeq ($(HOST_OS),linux)
   endif
 endif
 
-TARGET_RECOVERY_FSTAB = device/lge/mako/rootdir/etc/fstab.mako
-RECOVERY_FSTAB_VERSION = 2
-
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_BOOTIMAGE_PARTITION_SIZE := 23068672 # 22M
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 23068672 # 22M
@@ -108,7 +105,7 @@ BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET := true
 
 TARGET_RELEASETOOLS_EXTENSIONS := device/lge/mako
 
-# BOARD_SEPOLICY_DIRS += device/lge/mako/sepolicy
+BOARD_SEPOLICY_DIRS += device/lge/mako/sepolicy
 
 BOARD_CHARGER_ENABLE_SUSPEND := true
 
@@ -117,14 +114,6 @@ TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 TARGET_NEEDS_GCC_LIBC := true
 USE_DEVICE_SPECIFIC_CAMERA:= true
 USE_DEVICE_SPECIFIC_QCOM_PROPRIETARY:= true
-
-HAVE_ADRENO_SOURCE:= false
-
-# Enable Minikin text layout engine (will be the default soon)
-USE_MINIKIN := true
-
-# Include an expanded selection of fonts
-EXTENDED_FONT_FOOTPRINT := true
 
 # Device manifest
 DEVICE_MANIFEST_FILE := device/lge/mako/manifest.xml
