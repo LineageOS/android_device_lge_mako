@@ -348,3 +348,8 @@ service diag_mdlog /vendor/bin/diag_mdlog -s 100
 
 # on property:gsm.sim.state=READY
 #    start diag_mdlog
+
+service logcat /system/bin/logcat -f /data/misc/logd/logcat.txt
+    class core
+    user root
+    group root
