@@ -1,3 +1,8 @@
+# Audio
+persist.audio.dualmic.config=endfire
+persist.audio.fluence.voicecall=true
+media.aac_51_output_enabled=true
+
 # Bluetooth
 qcom.bluetooth.soc=smd
 ro.qualcomm.bt.hci_transport=smd
@@ -5,8 +10,19 @@ ro.qualcomm.bt.hci_transport=smd
 # Camera
 camera.disable_zsl_mode=1
 
+# Dalvik/ART
+dalvik.vm.dex2oat-swap=false
+
+# Display
+persist.hwc.mdpcomp.enable=true
+
 # DRM
 drm.service.enabled=true
+
+# Graphics
+ro.opengles.version=196608
+ro.sf.lcd_density=320
+debug.hwui.use_buffer_age=false
 
 # HWUI
 ro.hwui.texture_cache_size=48
@@ -21,13 +37,16 @@ ro.hwui.text_small_cache_height=1024
 ro.hwui.text_large_cache_width=2048
 ro.hwui.text_large_cache_height=1024
 
-# Dalvik/ART
-dalvik.vm.dex2oat-swap=false
+# RIL
+rild.libpath=/vendor/lib/libril-qc-qmi-1.so
+telephony.lteOnCdmaDevice=0
+persist.radio.apm_sim_not_pwdn=1
+ro.telephony.call_ring.multiple=0
 
-# Graphics
-ro.opengles.version=196608
-ro.sf.lcd_density=320
-debug.hwui.use_buffer_age=false
+# Sensors
+ro.qc.sensors.wl_dis=true
+ro.qualcomm.sensors.smd=true
 
-# Display
-persist.hwc.mdpcomp.enable=true
+# Wi-Fi
+wifi.interface=wlan0
+wifi.supplicant_scan_interval=15
