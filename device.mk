@@ -115,6 +115,10 @@ PRODUCT_PACKAGES += \
     copybit.msm8960 \
     memtrack.msm8960
 
+# GPS configuration
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/gps.conf:$(TARGET_COPY_OUT_VENDOR)/etc/gps.conf
+
 # GPS
 PRODUCT_PACKAGES += \
     libloc_adapter \
@@ -244,6 +248,10 @@ PRODUCT_COPY_FILES += \
 # Touchscreen calibration
 PRODUCT_COPY_FILES += \
    $(LOCAL_PATH)/configs/touch_dev.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/touch_dev.idc
+
+# Vibrator
+PRODUCT_PACKAGES += \
+    android.hardware.vibrator@1.0-impl
 
 # USB HAL
 PRODUCT_PACKAGES += \
