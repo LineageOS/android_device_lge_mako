@@ -1,0 +1,16 @@
+vndbinder_use(hal_gnss_default)
+
+r_dir_file(hal_gnss_default, sysfs_soc)
+
+# Access /dev/mdm
+allow hal_gnss_default radio_device:chr_file r_file_perms;
+
+allow hal_gnss_default self:socket create_socket_perms;
+allowxperm hal_gnss_default self:socket ioctl msm_sock_ipc_ioctls;
+
+# Allow access to Qualcomm MSM Interface (QMI) sockets
+unix_socket_connect(hal_gnss_default, qmuxd, qmux)
+allow hal_gnss_default qmuxd_socket:dir w_dir_perms;
+allow hal_gnss_default qmuxd_socket:sock_file { create setattr };
+
+allow hal_gnss_default self:netlink_socket create_socket_perms_no_ioctl;

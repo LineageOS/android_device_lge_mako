@@ -1,12 +1,12 @@
 # Bluetooth executables and scripts
-type bluetooth_loader, domain, domain_deprecated;
+type bluetooth_loader, domain;
 type bluetooth_loader_exec, exec_type, file_type;
 
 # Start bdAddrLoader from init
 init_daemon_domain(bluetooth_loader)
 
 # Run init.mako.bt.sh
-allow bluetooth_loader shell_exec:file rx_file_perms;
+allow bluetooth_loader shell_exec:file { rx_file_perms entrypoint };
 allow bluetooth_loader bluetooth_loader_exec:file rx_file_perms;
 
 # init.mako.bt.sh needs /system/bin/log access
@@ -21,10 +21,9 @@ allow bluetooth_loader persist_file:dir search;
 r_dir_file(bluetooth_loader, persist_bluetooth_file)
 
 # Set persist.service.bdroid.* and bluetooth.* property values
-allow { bluetooth bluetooth_loader } bluetooth_prop:property_service set;
+set_prop(bluetooth, bluetooth_prop)
+set_prop(bluetooth_loader, bluetooth_prop)
 
 # Allow getprop/setprop for init.mako.bt.sh
 allow bluetooth_loader system_file:file execute_no_trans;
 allow bluetooth_loader toolbox_exec:file rx_file_perms;
-
-unix_socket_connect(bluetooth_loader, property, init)

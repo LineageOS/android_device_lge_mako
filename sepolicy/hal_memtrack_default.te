@@ -1,0 +1,6 @@
+allow hal_memtrack_default debugfs_kgsl:file r_file_perms;
+
+# Memtrack reads proc/<pid>/cmdline to check if process is surfaceflinger.
+# Don't log denials for other processes.
+dontaudit hal_memtrack { domain -surfaceflinger}:file r_file_perms;
+dontaudit hal_memtrack { domain -surfaceflinger}:dir search;

@@ -1,16 +1,11 @@
 # kickstart processes and scripts (system process)
-type kickstart, domain, domain_deprecated;
+type kickstart, domain;
 type kickstart_exec, file_type, exec_type;
 
 init_daemon_domain(kickstart)
 
-# DAC overrides
-allow kickstart self:capability dac_override;
-auditallow kickstart self:capability dac_override;
-
-# Run kickstart
-allow kickstart shell_exec:file rx_file_perms;
-allow kickstart kickstart_exec:file rx_file_perms;
+# Spawn /system/bin/efsks and /system/bin/ks
+allow kickstart kickstart_exec:file { open execute_no_trans getattr };
 
 # Let qcks access /dev/mdm node (modem driver)
 allow kickstart radio_device:chr_file r_file_perms;
@@ -31,6 +26,7 @@ allow kickstart radio_efs_file:dir search;
 allow kickstart radio_efs_file:file r_file_perms;
 
 # Run dd from toolbox on firmware files
+allow kickstart shell_exec:file rx_file_perms;
 allow kickstart system_file:file execute_no_trans;
 allow kickstart toolbox_exec:file rx_file_perms;
 
@@ -38,9 +34,4 @@ allow kickstart toolbox_exec:file rx_file_perms;
 wakelock_use(kickstart)
 
 # Read tombstones
-allow kickstart tombstone_data_file:dir r_dir_perms;
-allow kickstart tombstone_data_file:file r_file_perms;
-
-# Investigate denial on system_data_file:dir.
-allow kickstart system_data_file:dir { write add_name remove_name };
-auditallow kickstart system_data_file:dir { write add_name remove_name };
+r_dir_file(kickstart, tombstone_data_file)

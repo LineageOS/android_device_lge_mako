@@ -1,6 +1,5 @@
-userdebug_or_eng(`
-  allow domain diag_device:chr_file rw_file_perms;
-')
-
-# Allow all domains read access to sysfs_thermal
-r_dir_file(domain, sysfs_thermal)
+# In order for /sys/kernel/debug/kgsl/proc/<pid>/mem
+# to be created for memory tracking, the domain of
+# the tracked process must have permission to search
+# in /sys/kernel/debug/kgsl.
+allow domain debugfs_kgsl:dir search;

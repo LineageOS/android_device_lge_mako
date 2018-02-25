@@ -1,5 +1,5 @@
 # Integrated qualcomm sensor process
-type sensors, domain, domain_deprecated;
+type sensors, domain;
 type sensors_exec, exec_type, file_type;
 
 # Started by init
@@ -19,7 +19,7 @@ dontaudit sensors self:capability dac_override;
 type_transition sensors apk_data_file:sock_file sensors_socket "sensor_ctl_socket";
 allow sensors sensors_socket:sock_file create_file_perms;
 # Trying to be restrictive with perms on apk_data_file
-allow sensors apk_data_file:dir { add_name write };
+allow sensors apk_data_file:dir { add_name search write };
 # Socket can be deleted. So might have to keep in order to work.
 allow sensors apk_data_file:dir remove_name;
 
@@ -33,6 +33,9 @@ allow sensors sensors_device:chr_file rw_file_perms;
 
 # Access power management controls
 allow sensors power_control_device:chr_file w_file_perms;
+
+# Access /sys/devices/system/soc/soc0
+r_dir_file(sensors, sysfs_soc)
 
 # Access to /persist/sensors
 allow sensors persist_file:dir r_dir_perms;

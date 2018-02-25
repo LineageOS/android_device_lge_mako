@@ -1,0 +1,9 @@
+# mpdecision socket access
+unix_socket_connect(hal_power, mpdecision, mpdecision)
+unix_socket_send(hal_power, mpdecision, mpdecision)
+allow hal_power mpdecision:unix_stream_socket sendto;
+allow hal_power mpdecision_socket:dir search;
+
+allow hal_power self:netlink_kobject_uevent_socket create_socket_perms_no_ioctl;
+
+allow hal_power sysfs_devices_system_cpu:file w_file_perms;

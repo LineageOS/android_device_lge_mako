@@ -1,5 +1,5 @@
 # Qualcomm Management Interface Multiplexer
-type qmux, domain, domain_deprecated;
+type qmux, domain;
 type qmux_exec, exec_type, file_type;
 
 # Started by init
@@ -14,6 +14,3 @@ allow qmux radio_device:chr_file rw_file_perms;
 
 # wake lock access
 wakelock_use(qmux)
-
-# Access to /sys/devices/virtual/smdpkt/smdcntl*/open_timeout
-allow qmux sysfs_smdcntl_open_timeout:file rw_file_perms;

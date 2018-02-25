@@ -6,12 +6,13 @@ unix_socket_send(mediaserver, mpdecision, mpdecision)
 
 # Permit mediaserver to create sockets with no specific SELinux class.
 # TODO: Investigate the specific type of socket.
-allow mediaserver self:socket create_socket_perms;
+allow mediaserver self:socket create_socket_perms_no_ioctl;
 
-# For text relocations in /system/vendor/lib/libmmjpeg.so
-allow mediaserver system_file:file execmod;
+# For text relocations in /system/vendor/lib/libDxHdcp.so
+allow mediaserver vendor_file:file execmod;
 
-allow mediaserver media_rw_data_file:file write;
+# Access to QSEECOM for HDCP
+allow mediaserver tee_device:chr_file rw_file_perms;
 
-allow mediaserver camera_device:chr_file { read write open ioctl };
-allow mediaserver audio_device:chr_file { read write open ioctl };
+# Allow reading /dev/graphics
+allow mediaserver graphics_device:dir r_dir_perms;
