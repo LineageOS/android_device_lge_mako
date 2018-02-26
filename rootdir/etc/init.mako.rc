@@ -311,6 +311,7 @@ service mpdecision /vendor/bin/mpdecision --avg_comp
     class main
     user root
     group root readproc system
+    disabled
 
 service qcamerasvr /vendor/bin/mm-qcamera-daemon
     class late_start
@@ -329,14 +330,6 @@ service bdAddrLoader /vendor/bin/bdAddrLoader -f /persist/bluetooth/.bdaddr -h -
     group system bluetooth
     oneshot
 
-# bugreport is triggered by holding down volume down, volume up and power
-service bugreport /vendor/bin/dumpstate -d -p -B \
-        -o /data/data/com.android.shell/files/bugreports/bugreport
-    class main
-    disabled
-    oneshot
-    keycodes 114 115 116
-
 service qseecomd /vendor/bin/qseecomd
     class core
     user root
@@ -349,7 +342,3 @@ service diag_mdlog /vendor/bin/diag_mdlog -s 100
 # on property:gsm.sim.state=READY
 #    start diag_mdlog
 
-service logcat /system/bin/logcat -f /data/misc/logd/logcat.txt
-    class core
-    user root
-    group root
