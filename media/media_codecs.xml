@@ -82,7 +82,7 @@
             <Feature name="adaptive-playback" />
             <Feature name="secure-playback" required="true" />
             <Feature name="can-swap-width-height" />
-            <Limit name="concurrent-instances" max="4" />
+            <Limit name="concurrent-instances" max="1" />
         </MediaCodec>
         <MediaCodec name="OMX.qcom.video.decoder.mpeg4" type="video/mp4v-es" >
             <Quirk name="requires-allocate-on-input-ports" />
@@ -108,5 +108,4 @@
         </MediaCodec>
     </Decoders>
     <Include href="media_codecs_google_video.xml" />
-    <Include href="media_codecs_ffmpeg.xml" />
 </MediaCodecs>
