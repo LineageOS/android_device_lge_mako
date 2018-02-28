@@ -117,6 +117,8 @@ TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 USE_DEVICE_SPECIFIC_CAMERA:= true
 USE_DEVICE_SPECIFIC_QCOM_PROPRIETARY:= true
 
+BOARD_HARDWARE_CLASS := device/lge/mako/lineagehw/
+
 # Device manifest
 DEVICE_MANIFEST_FILE := device/lge/mako/manifest.xml
 DEVICE_MATRIX_FILE := device/lge/mako/compatibility_matrix.xml
