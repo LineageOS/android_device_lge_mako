@@ -1,5 +1,4 @@
 unix_socket_send(cameraserver, camera, camera);
-unix_socket_send(cameraserver, mpdecision, mpdecision);
 
 # for libmmjpeg
 allow cameraserver vendor_file:file execmod;

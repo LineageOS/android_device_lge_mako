@@ -19,9 +19,6 @@
 
 /dev/bcm2079x-i2c                      u:object_r:nfc_device:s0
 
-# CPU governor controls
-/dev/socket/mpdecision(/.*)?           u:object_r:mpdecision_socket:s0
-
 ## Radio related
 # modem driver
 /dev/mdm                               u:object_r:radio_device:s0
@@ -99,13 +96,11 @@
 /system/vendor/bin/conn_init           u:object_r:conn_init_exec:s0
 /system/vendor/bin/hci_qcomm_init      u:object_r:hci_attach_exec:s0
 /system/vendor/bin/mm-qcamera-daemon   u:object_r:camera_exec:s0
-/system/vendor/bin/mpdecision          u:object_r:mpdecision_exec:s0
 /system/vendor/bin/netmgrd             u:object_r:netmgrd_exec:s0
 /system/vendor/bin/qmuxd               u:object_r:qmux_exec:s0
 /system/vendor/bin/qseecomd            u:object_r:tee_exec:s0
 /system/vendor/bin/rmt_storage         u:object_r:rmt_exec:s0
 /system/vendor/bin/sensors\.qcom       u:object_r:sensors_exec:s0
-/system/vendor/bin/thermald            u:object_r:thermald_exec:s0
 
 /system/vendor/bin/bdAddrLoader        u:object_r:bluetooth_loader_exec:s0
 /system/vendor/etc/init\.mako\.bt\.sh  u:object_r:bluetooth_loader_exec:s0
@@ -113,9 +108,6 @@
 /system/vendor/bin/efsks               u:object_r:kickstart_exec:s0
 /system/vendor/bin/ks                  u:object_r:kickstart_exec:s0
 /system/vendor/bin/qcks                u:object_r:kickstart_exec:s0
-
-# Binderized services
-/system/vendor/bin/hw/android\.hardware\.power@1\.0-service.qcom     u:object_r:hal_power_default_exec:s0
 
 # Persist firmware filesystem
 /persist(/.*)?                         u:object_r:persist_file:s0

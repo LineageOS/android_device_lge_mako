@@ -1,7 +1,7 @@
-# mpdecision
-genfscon sysfs /module/pm_8x60/modes                                             u:object_r:sysfs_mpdecision:s0
+# CPU PM
+genfscon sysfs /module/pm_8x60/modes                                             u:object_r:power_control_device:s0
 
-# graphics
+# Graphics
 genfscon debugfs /kgsl/proc                                                      u:object_r:debugfs_kgsl:s0
 genfscon sysfs /devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/gpuclk                 u:object_r:sysfs_graphics:s0
 genfscon sysfs /devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_gpuclk             u:object_r:sysfs_graphics:s0
@@ -10,14 +10,13 @@ genfscon sysfs /devices/virtual/graphics/fb0                                    
 genfscon sysfs /devices/virtual/graphics/fb1                                     u:object_r:sysfs_graphics:s0
 genfscon sysfs /devices/virtual/graphics/fb2                                     u:object_r:sysfs_graphics:s0
 
-# thermald
+# MSM Thermal
 genfscon sysfs /devices/virtual/thermal                                          u:object_r:sysfs_thermal:s0
 genfscon sysfs /devices/platform/msm_ssbi.0/pm8921-core/pm8xxx-adc/batt_therm    u:object_r:sysfs_thermal:s0
 genfscon sysfs /module/msm_thermal                                               u:object_r:sysfs_thermal:s0
 genfscon sysfs /module/pm8921_charger/parameters/thermal_mitigation              u:object_r:sysfs_thermal:s0
 
-# lights
+# Lights
 genfscon sysfs /devices/platform/msm_fb.525825/leds/lcd-backlight                u:object_r:sysfs_leds:s0
 genfscon sysfs /devices/platform/msm_ssbi.0/pm8921-core/pm8xxx-led               u:object_r:sysfs_leds:s0
-
 genfscon sysfs /devices/system/soc/soc0                                          u:object_r:sysfs_soc:s0
