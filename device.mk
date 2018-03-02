@@ -247,10 +247,6 @@ PRODUCT_PACKAGES += \
     sensors.msm8960 \
     android.hardware.sensors@1.0-impl
 
-# Thermal
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/thermald-mako.conf:$(TARGET_COPY_OUT_VENDOR)/etc/thermald.conf
-
 # Touchscreen calibration
 PRODUCT_COPY_FILES += \
    $(LOCAL_PATH)/configs/touch_dev.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/touch_dev.idc

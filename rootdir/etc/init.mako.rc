@@ -201,9 +201,6 @@ on post-fs-data
     # LED On/Off synchronization
     chown system system /sys/class/leds/red/device/lock
 
-    # communicate with mpdecision and thermald
-    mkdir /dev/socket/mpdecision 2770 root system
-
     # adjust vibrator amplitude
     write /sys/class/timed_output/vibrator/amp 70
 
@@ -229,9 +226,6 @@ on post-fs-data
     restorecon /sys/devices/platform/mipi_lgit.1537/kgamma_g
     restorecon /sys/devices/platform/mipi_lgit.1537/kgamma_b
     restorecon /sys/devices/platform/mipi_lgit.1537/kgamma_apply
-
-    # disable diag port
-    rm /dev/diag
 
 service rmt_storage /vendor/bin/rmt_storage
     class core
@@ -303,16 +297,6 @@ service charger /charger
     critical
     seclabel u:r:charger:s0
 
-service thermald /vendor/bin/thermald
-    class main
-    group radio system
-
-service mpdecision /vendor/bin/mpdecision --avg_comp
-    class main
-    user root
-    group root readproc system
-    disabled
-
 service qcamerasvr /vendor/bin/mm-qcamera-daemon
     class late_start
     user camera
@@ -334,11 +318,3 @@ service qseecomd /vendor/bin/qseecomd
     class core
     user root
     group root
-
-service diag_mdlog /vendor/bin/diag_mdlog -s 100
-    class late_start
-    disabled
-
-# on property:gsm.sim.state=READY
-#    start diag_mdlog
-
