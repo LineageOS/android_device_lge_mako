@@ -3,6 +3,9 @@ type qmuxd_socket, file_type;
 type sensors_socket, file_type;
 type camera_socket, file_type;
 
+# Default type for anything under /firmware
+type firmware_file, fs_type, contextmount_type;
+
 type sensors_data_file, file_type, data_file_type;
 
 type kickstart_data_file, file_type, data_file_type;
@@ -18,6 +21,8 @@ type persist_sensors_file, file_type;
 type persist_wifi_file, file_type;
 
 type sysfs_graphics, fs_type, sysfs_type;
+type sysfs_smdcntl_open_timeout, fs_type, sysfs_type;
+type sysfs_hardware, fs_type, sysfs_type;
 type sysfs_soc, fs_type, sysfs_type;
 
 type debugfs_kgsl, debugfs_type, fs_type;

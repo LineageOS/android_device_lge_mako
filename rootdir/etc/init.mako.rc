@@ -237,6 +237,7 @@ service hciattach /vendor/bin/init.mako.bt.sh
     class late_start
     user bluetooth
     group qcom_oncrpc bluetooth system
+    seclabel u:r:bluetooth_loader:s0
     disabled
     oneshot
 
@@ -301,6 +302,7 @@ service wcnss_init /vendor/bin/init.mako.wifi.sh
     class late_start
     user system
     group system wifi
+    seclabel u:r:conn_init:s0
     oneshot
 
 service bdAddrLoader /vendor/bin/bdAddrLoader -f /persist/bluetooth/.bdaddr -h -x

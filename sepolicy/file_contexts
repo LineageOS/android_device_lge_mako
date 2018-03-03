@@ -47,7 +47,7 @@
 /dev/ttyUSB0                           u:object_r:radio_device:s0
 
 # Jpeg Engine support
-/dev/gemini0                           u:object_r:video_device:s0
+/dev/gemini*                           u:object_r:video_device:s0
 # MSM camera related
 /dev/v4l-subdev.*                      u:object_r:video_device:s0
 /dev/msm_camera(/.*)?                  u:object_r:video_device:s0
@@ -101,9 +101,10 @@
 /system/vendor/bin/qseecomd            u:object_r:tee_exec:s0
 /system/vendor/bin/rmt_storage         u:object_r:rmt_exec:s0
 /system/vendor/bin/sensors\.qcom       u:object_r:sensors_exec:s0
-
 /system/vendor/bin/bdAddrLoader        u:object_r:bluetooth_loader_exec:s0
-/system/vendor/etc/init\.mako\.bt\.sh  u:object_r:bluetooth_loader_exec:s0
+
+/system/vendor/bin/init\.mako\.bt\.sh      u:object_r:bluetooth_loader_exec:s0
+/system/vendor/bin/init\.mako\.wifi\.sh    u:object_r:conn_init_exec:s0
 
 /system/vendor/bin/efsks               u:object_r:kickstart_exec:s0
 /system/vendor/bin/ks                  u:object_r:kickstart_exec:s0
