@@ -118,23 +118,10 @@ PRODUCT_PACKAGES += \
     copybit.msm8960 \
     memtrack.msm8960
 
-# GPS configuration
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/gps.conf:$(TARGET_COPY_OUT_VENDOR)/etc/gps.conf
-
 # GPS
 PRODUCT_PACKAGES += \
-    libloc_adapter \
-    libloc_eng \
-    libloc_api_v02 \
-    libloc_ds_api \
-    libloc_core \
-    libizat_core \
-    libgeofence \
-    libgps.utils \
     gps.conf \
-    gps.msm8960 \
-    flp.msm8960
+    gps.msm8960
 
 # GNSS HAL
 PRODUCT_PACKAGES += \
