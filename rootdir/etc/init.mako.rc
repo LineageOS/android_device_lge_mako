@@ -43,6 +43,10 @@ on fs
     # Start HW service manager early
     start hwservicemanager
 
+    # qseecomd needs /dev/block/bootdevice
+    # vold needs keymaster that needs qseecomd
+    start qseecomd
+
 on late-fs
     # Start services for bootanim
     start surfaceflinger
