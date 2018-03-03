@@ -19,15 +19,15 @@ LOCAL_MODULE_PATH := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := init.mako.power.rc
-LOCAL_MODULE_TAGS := optional eng
+LOCAL_MODULE       := init.mako.bt.sh
+LOCAL_MODULE_TAGS  := optional eng
 LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES := etc/init.mako.power.rc
-LOCAL_MODULE_PATH := $(TARGET_ROOT_OUT)
+LOCAL_SRC_FILES    := etc/init.mako.bt.sh
+LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := init.recovery.mako.rc
+LOCAL_MODULE := init.mako.power.rc
 LOCAL_MODULE_TAGS := optional eng
 LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES := etc/init.mako.power.rc
@@ -39,6 +39,22 @@ LOCAL_MODULE := init.mako.usb.rc
 LOCAL_MODULE_TAGS := optional eng
 LOCAL_MODULE_CLASS := ETC
 LOCAL_SRC_FILES := etc/init.mako.usb.rc
+LOCAL_MODULE_PATH := $(TARGET_ROOT_OUT)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE       := init.mako.wifi.sh
+LOCAL_MODULE_TAGS  := optional eng
+LOCAL_MODULE_CLASS := ETC
+LOCAL_SRC_FILES    := etc/init.mako.wifi.sh
+LOCAL_MODULE_PATH  := $(TARGET_OUT_VENDOR_EXECUTABLES)
+include $(BUILD_PREBUILT)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := init.recovery.mako.rc
+LOCAL_MODULE_TAGS := optional eng
+LOCAL_MODULE_CLASS := ETC
+LOCAL_SRC_FILES := etc/init.mako.power.rc
 LOCAL_MODULE_PATH := $(TARGET_ROOT_OUT)
 include $(BUILD_PREBUILT)
 

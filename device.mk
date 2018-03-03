@@ -72,9 +72,6 @@ PRODUCT_PACKAGES += \
     libwfcu \
     conn_init
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/init.mako.bt.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.mako.bt.sh
-
 # Bluetooth HAL
 PRODUCT_PACKAGES += \
     libbt-vendor \
@@ -211,8 +208,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     fstab.mako \
     init.mako.rc \
+    init.mako.bt.sh \
     init.mako.power.rc \
     init.mako.usb.rc \
+    init.mako.wifi.sh \
     init.recovery.mako.rc \
     ueventd.rc \
     ueventd.mako.rc
@@ -254,7 +253,6 @@ PRODUCT_PACKAGES += \
     wpa_supplicant.conf
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/init.mako.wifi.sh:$(TARGET_COPY_OUT_VENDOR)/bin/init.mako.wifi.sh \
     $(LOCAL_PATH)/wifi/WCNSS_cfg.dat:$(TARGET_COPY_OUT_VENDOR)/firmware/wlan/prima/WCNSS_cfg.dat \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_wlan_nv.bin:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_wlan_nv.bin \
