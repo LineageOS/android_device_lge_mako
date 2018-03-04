@@ -1,3 +1,4 @@
 allow init tmpfs:lnk_file create_file_perms;
 allow init debugfs:file w_file_perms;
 allow init power_control_device:file rw_file_perms;
+allow init sysfs_hardware:file rw_file_perms;

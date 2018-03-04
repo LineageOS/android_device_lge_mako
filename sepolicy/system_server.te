@@ -19,4 +19,5 @@ allow system_server sensors_device:chr_file rw_file_perms;
 allow system_server self:socket ioctl;
 allowxperm system_server self:socket ioctl msm_sock_ipc_ioctls;
 
+allow system_server sysfs_hardware:file rw_file_perms;
 allow system_server debugfs_kgsl:file rw_file_perms;

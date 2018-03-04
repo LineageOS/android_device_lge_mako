@@ -3,3 +3,9 @@
 # the tracked process must have permission to search
 # in /sys/kernel/debug/kgsl.
 allow domain debugfs_kgsl:dir search;
+
+# Allow all domains read access to sysfs_thermal
+r_dir_file(domain, sysfs_thermal)
+
+# Allow all domains read access to proc_stat
+r_dir_file(domain, proc_stat)
