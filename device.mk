@@ -42,7 +42,6 @@ PRODUCT_AAPT_PREBUILT_DPI := hdpi
 # Audio
 PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-impl \
-    android.hardware.audio@2.0-service \
     android.hardware.audio.effect@2.0-impl \
     audio.primary.msm8960 \
     audio.a2dp.default \
@@ -76,13 +75,11 @@ PRODUCT_PACKAGES += \
 # Bluetooth HAL
 PRODUCT_PACKAGES += \
     libbt-vendor \
-    android.hardware.bluetooth@1.0-impl \
-    android.hardware.bluetooth@1.0-service
+    android.hardware.bluetooth@1.0-impl
 
 # Camera
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
-    android.hardware.camera.provider@2.4-service \
     camera.device@1.0-impl \
     camera.mako \
     libmmcamera_interface2 \
@@ -102,7 +99,6 @@ PRODUCT_PACKAGES += \
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \
-    android.hardware.drm@1.0-service
 
 # Graphics
 PRODUCT_PACKAGES += \
@@ -111,7 +107,6 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.composer@2.1-impl \
     android.hardware.graphics.mapper@2.0-impl \
     android.hardware.memtrack@1.0-impl \
-    android.hardware.memtrack@1.0-service \
     libgenlock \
     liboverlay \
     hwcomposer.msm8960 \
@@ -126,8 +121,7 @@ PRODUCT_PACKAGES += \
 
 # GNSS HAL
 PRODUCT_PACKAGES += \
-    android.hardware.gnss@1.0-impl \
-    android.hardware.gnss@1.0-service
+    android.hardware.gnss@1.0-impl
 
 # Keylayouts
 PRODUCT_COPY_FILES += \
@@ -145,8 +139,7 @@ PRODUCT_COPY_FILES += \
 
 # Keymaster
 PRODUCT_PACKAGES += \
-    android.hardware.keymaster@3.0-impl \
-    android.hardware.keymaster@3.0-service
+    android.hardware.keymaster@3.0-impl
 
 # Keystore
 PRODUCT_PACKAGES += \
@@ -155,7 +148,6 @@ PRODUCT_PACKAGES += \
 # Lights
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-impl \
-    android.hardware.light@2.0-service \
     lights.mako
 
 # Media
@@ -236,8 +228,7 @@ PRODUCT_PACKAGES += \
 # Sensors
 PRODUCT_PACKAGES += \
     sensors.msm8960 \
-    android.hardware.sensors@1.0-impl \
-    android.hardware.sensors@1.0-service
+    android.hardware.sensors@1.0-impl
 
 # Touchscreen calibration
 PRODUCT_COPY_FILES += \
@@ -245,8 +236,7 @@ PRODUCT_COPY_FILES += \
 
 # Vibrator
 PRODUCT_PACKAGES += \
-    android.hardware.vibrator@1.0-impl \
-    android.hardware.vibrator@1.0-service
+    android.hardware.vibrator@1.0-impl
 
 # USB HAL
 PRODUCT_PACKAGES += \
