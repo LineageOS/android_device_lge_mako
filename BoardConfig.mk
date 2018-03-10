@@ -1,6 +1,6 @@
 #
 # Copyright (C) 2011 The Android Open-Source Project
-# Copyright (C) 2017 The LineageOS Project
+# Copyright (C) 2017-2018 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,6 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
+# Inherit from vendor
+-include vendor/lge/mako/BoardConfigVendor.mk
+
+PLATFORM_PATH := device/lge/mako
 
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
@@ -30,8 +35,8 @@ BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01600000
 TARGET_KERNEL_SOURCE := kernel/lge/mako
 TARGET_KERNEL_CONFIG := lineageos_mako_defconfig
 
-BOARD_USES_ALSA_AUDIO:= true
-BOARD_USES_LEGACY_ALSA_AUDIO:= false
+BOARD_USES_ALSA_AUDIO := true
+BOARD_USES_LEGACY_ALSA_AUDIO := false
 BOARD_USES_FLUENCE_INCALL := true
 BOARD_USES_SEPERATED_AUDIO_INPUT := true
 
@@ -45,10 +50,11 @@ BLUETOOTH_HCI_USE_MCT := true
 TARGET_NO_RADIOIMAGE := true
 TARGET_BOARD_PLATFORM := msm8960
 TARGET_BOOTLOADER_BOARD_NAME := MAKO
-TARGET_BOOTLOADER_NAME=mako
-TARGET_BOARD_INFO_FILE := device/lge/mako/board-info.txt
+TARGET_BOOTLOADER_NAME := mako
 
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/lge/mako/bluetooth
+TARGET_BOARD_INFO_FILE ?= $(PLATFORM_PATH)/board-info.txt
+
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(PLATFORM_PATH)/bluetooth
 
 # FIXME: HOSTAPD-derived wifi driver
 BOARD_HAS_QCOM_WLAN := true
@@ -96,7 +102,6 @@ BOARD_SYSTEMIMAGE_JOURNAL_SIZE := 0
 TARGET_USES_MKE2FS := true
 
 BOARD_USES_SECURE_SERVICES := true
-
 BOARD_USES_EXTRA_THERMAL_SENSOR := true
 BOARD_USES_CAMERA_FAST_AUTOFOCUS := true
 
@@ -104,24 +109,22 @@ BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := $(TARGET_BOARD_PLATFORM)
 TARGET_NO_RPC := true
 BOARD_VENDOR_QCOM_LOC_PDK_FEATURE_SET := true
 
-TARGET_RECOVERY_FSTAB = device/lge/mako/rootdir/etc/fstab.mako
+TARGET_RECOVERY_FSTAB = $(PLATFORM_PATH)/rootdir/etc/fstab.mako
 
-TARGET_RELEASETOOLS_EXTENSIONS := device/lge/mako
+TARGET_RELEASETOOLS_EXTENSIONS := $(PLATFORM_PATH)
 
-BOARD_SEPOLICY_DIRS += device/lge/mako/sepolicy
+BOARD_SEPOLICY_DIRS += $(PLATFORM_PATH)/sepolicy
 
 BOARD_CHARGER_ENABLE_SUSPEND := true
 
 TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
-TARGET_HAS_LEGACY_CAMERA_HAL1 := true
+TARGET_USES_MEDIA_EXTENSIONS := true
 
-USE_DEVICE_SPECIFIC_CAMERA:= true
+USE_DEVICE_SPECIFIC_CAMERA := true
 USE_DEVICE_SPECIFIC_QCOM_PROPRIETARY:= true
 
-BOARD_HARDWARE_CLASS := device/lge/mako/lineagehw/
+BOARD_HARDWARE_CLASS := $(PLATFORM_PATH)/lineagehw/
 
 # Device manifest
-DEVICE_MANIFEST_FILE := device/lge/mako/manifest.xml
-DEVICE_MATRIX_FILE := device/lge/mako/compatibility_matrix.xml
-
--include vendor/lge/mako/BoardConfigVendor.mk
+DEVICE_MANIFEST_FILE := $(PLATFORM_PATH)/manifest.xml
+DEVICE_MATRIX_FILE := $(PLATFORM_PATH)/compatibility_matrix.xml
