@@ -2,13 +2,16 @@
 genfscon sysfs /module/pm_8x60/modes                                             u:object_r:power_control_device:s0
 
 # Graphics
-genfscon debugfs /kgsl/proc                                                      u:object_r:debugfs_kgsl:s0
-genfscon sysfs /devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/gpuclk                 u:object_r:sysfs_graphics:s0
-genfscon sysfs /devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_gpuclk             u:object_r:sysfs_graphics:s0
-genfscon sysfs /devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/reset_count            u:object_r:sysfs_graphics:s0
-genfscon sysfs /devices/virtual/graphics/fb0                                     u:object_r:sysfs_graphics:s0
-genfscon sysfs /devices/virtual/graphics/fb1                                     u:object_r:sysfs_graphics:s0
-genfscon sysfs /devices/virtual/graphics/fb2                                     u:object_r:sysfs_graphics:s0
+genfscon debugfs /kgsl/proc                                                            u:object_r:debugfs_kgsl:s0
+genfscon sysfs /devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/gpuclk                       u:object_r:sysfs_graphics:s0
+genfscon sysfs /devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/gpubusy                      u:object_r:sysfs_graphics:s0
+genfscon sysfs /devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/max_gpuclk                   u:object_r:sysfs_graphics:s0
+genfscon sysfs /devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/reset_count                  u:object_r:sysfs_graphics:s0
+genfscon sysfs /devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/gpu_available_frequencies    u:object_r:sysfs_graphics:s0
+genfscon sysfs /devices/platform/kgsl-3d0.0/kgsl/kgsl-3d0/pwrscale/trustzone/governor  u:object_r:sysfs_graphics:s0
+genfscon sysfs /devices/virtual/graphics/fb0                                           u:object_r:sysfs_graphics:s0
+genfscon sysfs /devices/virtual/graphics/fb1                                           u:object_r:sysfs_graphics:s0
+genfscon sysfs /devices/virtual/graphics/fb2                                           u:object_r:sysfs_graphics:s0
 
 # MSM Thermal
 genfscon sysfs /devices/virtual/thermal                                          u:object_r:sysfs_thermal:s0
