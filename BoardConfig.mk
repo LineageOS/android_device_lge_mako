@@ -77,6 +77,9 @@ TARGET_USES_SF_BYPASS := true
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 
+# Lights
+TARGET_PROVIDES_LIBLIGHT := true
+
 # Dexpreopt
 ifeq ($(HOST_OS),linux)
   ifneq ($(TARGET_BUILD_VARIANT),eng)
