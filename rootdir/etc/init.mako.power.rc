@@ -87,5 +87,4 @@ on property:recovery.perf.mode=0
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor interactive
 
 on property:dev.bootcomplete=1
-    write /sys/block/mmcblk0/queue/read_ahead_kb 1024
     setprop sys.io.scheduler bfq
