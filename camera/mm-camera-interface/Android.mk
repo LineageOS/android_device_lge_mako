@@ -22,7 +22,7 @@ LOCAL_COPY_HEADERS += \
 LOCAL_C_INCLUDES += \
     $(LOCAL_PATH)/.. \
     $(LOCAL_PATH)/../inc \
-    hardware/qcom/media/msm8960/mm-core/inc
+    $(call project-path-for,qcom-media)/mm-core/inc
 
 # Kernel headers
 LOCAL_C_INCLUDES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
