@@ -206,7 +206,11 @@ OMX_ERRORTYPE eventHandler( OMX_IN OMX_HANDLETYPE hComponent __unused,
                             OMX_IN OMX_PTR pEventData __unused)
 {
     ALOGV("%s", __func__);
+#ifdef USE_QCOM_OMX_ENCODER_TYPES
+    ALOGV("%s:got event %d ndata1 %lu ndata2 %lu", __func__,
+#else
     ALOGV("%s:got event %d ndata1 %u ndata2 %u", __func__,
+#endif
       eEvent, nData1, nData2);
     pthread_mutex_lock(&lock);
     expectedEvent = eEvent;
@@ -343,7 +347,11 @@ int8_t omxJpegEncodeNext(omx_jpeg_encode_params *encode_params)
     OMX_GetParameter(pHandle, OMX_IndexParamPortDefinition, inputPort);
     OMX_GetParameter(pHandle, OMX_IndexParamPortDefinition, outputPort);
 
+#ifdef USE_QCOM_OMX_ENCODER_TYPES
+    ALOGV("%s:nFrameWidth=%lu nFrameHeight=%lu nBufferSize=%lu w=%d h=%d",
+#else
     ALOGV("%s:nFrameWidth=%d nFrameHeight=%d nBufferSize=%d w=%d h=%d",
+#endif
       __func__, inputPort->format.image.nFrameWidth,
       inputPort->format.image.nFrameHeight, inputPort->nBufferSize,
       bufferoffset.width, bufferoffset.height);
@@ -420,7 +428,11 @@ int8_t omxJpegEncodeNext(omx_jpeg_encode_params *encode_params)
     pmem_info1.fd = encode_params->thumbnail_fd;
     pmem_info1.offset = 0;
 
+#ifdef USE_QCOM_OMX_ENCODER_TYPES
+    ALOGV("%s: input1 buff size %lu", __func__, inputPort1->nBufferSize);
+#else
     ALOGV("%s: input1 buff size %d", __func__, inputPort1->nBufferSize);
+#endif
     OMX_UseBuffer(pHandle, &pInBuffers1, 2, &pmem_info1,
       inputPort1->nBufferSize, (void *) encode_params->thumbnail_buf);
     OMX_UseBuffer(pHandle, &pOutBuffers, 1, NULL, inputPort->nBufferSize,
@@ -670,7 +682,11 @@ int8_t omxJpegEncode(omx_jpeg_encode_params *encode_params)
     pmem_info1.fd = encode_params->thumbnail_fd;
     pmem_info1.offset = 0;
 
+#ifdef USE_QCOM_OMX_ENCODER_TYPES
+    ALOGV("%s: input1 buff size %lu", __func__, inputPort1->nBufferSize);
+#else
     ALOGV("%s: input1 buff size %d", __func__, inputPort1->nBufferSize);
+#endif
     OMX_UseBuffer(pHandle, &pInBuffers1, 2, &pmem_info1,
       inputPort1->nBufferSize, (void *) encode_params->thumbnail_buf);
 

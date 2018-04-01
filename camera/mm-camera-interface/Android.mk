@@ -2,6 +2,10 @@ LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
+ifeq ($(BOARD_USES_QCOM_HARDWARE),true)
+    LOCAL_CFLAGS += -DUSE_QCOM_OMX_ENCODER_TYPES
+endif
+
 LOCAL_SRC_FILES := \
     mm_camera_interface2.c \
     mm_camera_stream.c \
