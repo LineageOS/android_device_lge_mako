@@ -1,1 +1,2 @@
 ctl.rmt            u:object_r:ctl_rmt_prop:s0
+wc_transport.      u:object_r:bluetooth_prop:s0

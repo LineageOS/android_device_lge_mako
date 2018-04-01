@@ -1973,7 +1973,11 @@ int QCameraHardwareInterface::allocate_ion_memory(QCameraHalHeap_t *p_camera_mem
   p_camera_memory->alloc[cnt].len = (p_camera_memory->alloc[cnt].len + 4095) & (~4095);
   p_camera_memory->alloc[cnt].align = 4096;
   p_camera_memory->alloc[cnt].flags = ION_FLAG_CACHED;
+#ifdef USE_QCOM_ION_MASK_VARIANT
+  p_camera_memory->alloc[cnt].heap_mask = ion_type;
+#else
   p_camera_memory->alloc[cnt].heap_id_mask = ion_type;
+#endif
 
   rc = ioctl(p_camera_memory->main_ion_fd[cnt], ION_IOC_ALLOC, &p_camera_memory->alloc[cnt]);
   if (rc < 0) {
@@ -2030,7 +2034,11 @@ int QCameraHardwareInterface::allocate_ion_memory(QCameraStatHeap_t *p_camera_me
   p_camera_memory->alloc[cnt].len = (p_camera_memory->alloc[cnt].len + 4095) & (~4095);
   p_camera_memory->alloc[cnt].align = 4096;
   p_camera_memory->alloc[cnt].flags = ION_FLAG_CACHED;
+#ifdef USE_QCOM_ION_MASK_VARIANT
+  p_camera_memory->alloc[cnt].heap_mask = (0x1 << ion_type | 0x1 << ION_IOMMU_HEAP_ID);
+#else
   p_camera_memory->alloc[cnt].heap_id_mask = (0x1 << ion_type | 0x1 << ION_IOMMU_HEAP_ID);
+#endif
 
   rc = ioctl(p_camera_memory->main_ion_fd[cnt], ION_IOC_ALLOC, &p_camera_memory->alloc[cnt]);
   if (rc < 0) {
