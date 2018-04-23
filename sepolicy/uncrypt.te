@@ -1,0 +1,4 @@
+allow uncrypt cache_file:dir rw_file_perms;
+allow uncrypt cache_file:dir { add_name create remove_name };
+allow uncrypt cache_file:file rw_file_perms;
+allow uncrypt cache_file:file { create rename };
