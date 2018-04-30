@@ -83,7 +83,6 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     camera.device@1.0-impl \
     camera.mako \
-    libmmcamera_interface2 \
     libmmcamera_interface \
     libmm-omxcore \
     libdivxdrmdecrypt \

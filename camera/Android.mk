@@ -63,7 +63,7 @@ LOCAL_C_INCLUDES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include/media
 LOCAL_ADDITIONAL_DEPENDENCIES := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
 LOCAL_SHARED_LIBRARIES := libutils libui libcamera_client libcamera_metadata liblog libcutils libbinder libnativewindow
-LOCAL_SHARED_LIBRARIES += libgenlock libmmcamera_interface2
+LOCAL_SHARED_LIBRARIES += libgenlock libmmcamera_interface
 LOCAL_SHARED_LIBRARIES += android.hidl.token@1.0-utils android.hardware.graphics.bufferqueue@1.0
 
 ifneq ($(DLOPEN_LIBMMCAMERA),1)
