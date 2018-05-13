@@ -2,6 +2,7 @@
 <!--
 **
 ** Copyright 2012, The Android Open Source Project
+** Copyright 2018, The LineageOS Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License")
 ** you may not use this file except in compliance with the License.
@@ -18,27 +19,20 @@
 -->
 <device name="Android">
     <!-- All values are in mAh except as noted -->
+
+    <!-- Nothing -->
     <item name="none">0</item>
-    <item name="screen.on">98.19</item>
-    <item name="screen.full">211.6</item>
-    <item name="bluetooth.active">59.22</item>
-    <item name="bluetooth.on">0.7</item>
-    <item name="wifi.on">1.38</item>
-    <item name="wifi.active">62.09</item>
-    <item name="wifi.scan">52.1</item>
-    <item name="dsp.audio">0.1</item>
-    <item name="dsp.video">0.1</item>
-    <item name="gps.on">70.05</item>
-    <item name="radio.active">185.6</item>
-    <!-- The current consumed by the radio when it is scanning for a signal -->
-    <item name="radio.scanning">122.68</item>
-    <!-- Current consumed by the radio at different signal strengths, when paging -->
-    <array name="radio.on"> <!-- Strength 0 to BINS-1 -->
-        <value>7.65</value> <!-- no signal -->
-        <value>0.97</value> <!-- others -->
-    </array>
+
+    <!-- This is the battery capacity in mAh -->
+    <item name="battery.capacity">2100</item>
+
+    <!-- Power consumption when CPU is suspended -->
+    <item name="cpu.idle">3.68</item>
+    <!-- Additional power consumption when CPU is in a kernel idle loop -->
+    <item name="cpu.awake">14.74</item>
+
     <!-- Different CPU speeds as reported in
-         /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state -->
+         /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies -->
     <array name="cpu.speeds">
         <value>384000</value> <!-- 384 MHz CPU speed -->
         <value>486000</value> <!-- 486 MHz CPU speed -->
@@ -53,10 +47,8 @@
         <value>1458000</value> <!-- 1458 MHz CPU speed -->
         <value>1512000</value> <!-- 1512 MHz CPU speed -->
     </array>
-    <!-- Power consumption when CPU is idle -->
-    <item name="cpu.idle">3.68</item>
-    <item name="cpu.awake">14.74</item>
-    <!-- Power consumption at different speeds -->
+
+    <!-- Additional power used by CPUs when running at different speeds. -->
     <array name="cpu.active">
         <value>47.05</value> <!-- 384 MHz CPU speed -->
         <value>75.78</value> <!-- 486 MHz CPU speed -->
@@ -71,6 +63,53 @@
         <value>237.52</value> <!-- 1458 MHz CPU speed -->
         <value>247.18</value> <!-- 1512 MHz CPU speed -->
     </array>
-    <!-- This is the battery capacity in mAh -->
-    <item name="battery.capacity">2100</item>
+
+    <!-- Additional power used when screen is turned on at minimum brightness -->
+    <item name="screen.on">>98.19</item>
+    <!-- Additional power used when screen is at maximum brightness, compared to
+         screen at minimum brightness -->
+    <item name="screen.full">211.6</item>
+
+    <!-- Average power used by the camera flash module when on -->
+    <item name="camera.flashlight">131.88</item>
+    <!-- Average power use by the camera subsystem for a typical camera
+         application. Intended as a rough estimate for an application running a
+         preview and capturing approximately 10 full-resolution pictures per
+         minute. -->
+    <item name="camera.avg">343.67</item>
+    <!-- Additional power used when audio decoding/encoding via DSP -->
+    <item name="dsp.audio">25</item>
+    <!-- Additional power used when video decoding via DSP -->
+    <item name="dsp.video">180</item>
+    <!-- Additional power used when GPS is acquiring a signal -->
+    <item name="gps.on">70.05</item>
+    <!-- Additional power used when Wi-Fi is turned on but not receiving,
+         transmitting, or scanning -->
+    <item name="wifi.on">1.38</item>
+    <!-- Additional power used when transmitting or receiving over Wi-Fi -->
+    <item name="wifi.active">62.09</item>
+    <!-- Additional power used when Wi-Fi is scanning for access points -->
+    <item name="wifi.scan">52.1</item>
+
+    <!-- mA.  Current figures based on .0801 s/c and 75.48mA while scanning -->
+    <array name="wifi.batchedscan">
+        <value>0.0002</value>    <!-- 1-8/hr -->
+        <value>0.002</value>     <!-- 9-64/hr -->
+        <value>0.02</value>      <!-- 65-512/hr -->
+        <value>.2</value>        <!-- 513-4096/hr -->
+        <value>2</value>         <!-- 4097-?/hr -->
+    </array>
+
+    <!-- Additional power used when cellular radio is transmitting/receiving -->
+    <item name="radio.active">185.6</item>
+    <!-- The current consumed by the radio when it is scanning for a signal -->
+    <item name="radio.scanning">122.68</item>
+    <!-- Current consumed by the radio at different signal strengths, when paging -->
+    <array name="radio.on"> <!-- Strength 0 to BINS-1 -->
+        <value>7.65</value>
+        <value>4.78</value>
+        <value>2.98</value>
+        <value>1.86</value>
+        <value>1.16</value>
+    </array>
 </device>
