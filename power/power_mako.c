@@ -14,21 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#include <errno.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/socket.h>
-#include <sys/un.h>
-#include <fcntl.h>
-#include <dlfcn.h>
-#include <cutils/uevent.h>
-#include <errno.h>
-#include <sys/poll.h>
-#include <pthread.h>
-#include <linux/netlink.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 #define LOG_TAG "PowerHAL"
 #include <utils/Log.h>
@@ -83,8 +69,6 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
 static void power_hint( __attribute__((unused)) struct power_module *module,
                       power_hint_t hint, void *data)
 {
-    int cpu, ret;
-
     switch (hint) {
         case POWER_HINT_INTERACTION:
         case POWER_HINT_LAUNCH:
