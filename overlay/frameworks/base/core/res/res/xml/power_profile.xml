@@ -65,7 +65,7 @@
     </array>
 
     <!-- Additional power used when screen is turned on at minimum brightness -->
-    <item name="screen.on">>98.19</item>
+    <item name="screen.on">98.19</item>
     <!-- Additional power used when screen is at maximum brightness, compared to
          screen at minimum brightness -->
     <item name="screen.full">211.6</item>
