@@ -8,7 +8,7 @@ vendor/bin/qcks
 vendor/bin/qmuxd
 vendor/bin/qseecomd
 vendor/bin/rmt_storage
-vendor/bin/sensors.qcom
+vendor/bin/sensors.qcom|37297d552d09eba0cf4020875affc7d07203e358
 vendor/firmware/a300_pfp.fw
 vendor/firmware/a300_pm4.fw
 vendor/firmware/bcm2079x_firmware.ncd
@@ -55,7 +55,7 @@ vendor/firmware/wcnss.b04
 vendor/firmware/wcnss.b05
 vendor/firmware/wcnss.mdt
 vendor/lib/hw/flp.msm8960.so
-vendor/lib/sensors.mako.so
+vendor/lib/sensors.mako.so|1dbb2f854fb3a656407546a8fa8bfd148a71cfad
 vendor/lib/libacdbdata.so
 vendor/lib/libacdbloader.so
 vendor/lib/libAKM.so
@@ -72,7 +72,7 @@ vendor/lib/libdrmfs.so
 vendor/lib/libdrmtime.so
 vendor/lib/libdsi_netctrl.so
 vendor/lib/libdsutils.so
-vendor/lib/libDxHdcp.so
+vendor/lib/libDxHdcp.so|f591836648785c5334d71e7d4c265f0e3a2b83dc
 vendor/lib/libgemini.so
 vendor/lib/libidl.so
 vendor/lib/libimage-jpeg-dec-omx-comp.so
@@ -125,9 +125,9 @@ vendor/lib/libizat_core.so
 vendor/lib/libllvm-qcom.so
 vendor/lib/libloc_api_v02.so
 vendor/lib/libloc_ds_api.so
-vendor/lib/librs_adreno_sha1.so
-vendor/lib/librs_adreno.so
-vendor/lib/libRSDriver_adreno.so
+vendor/lib/librs_adreno_sha1.so|be8a817743950dac6e22b50cbd9657c2d35c35f2
+vendor/lib/librs_adreno.so|bb1d5cb84f14ed18fcbfb4815692cb196e44f180
+vendor/lib/libRSDriver_adreno.so|ee3386248adfa7d1a8c1107e051bcbbd3e8df0c1
 vendor/lib/libsc-a3xx.so
-vendor/lib/mediadrm/libwvdrmengine.so
+vendor/lib/mediadrm/libwvdrmengine.so|66ba66d047044f92eb0eada1faf6a5799ded90ab
 vendor/lib/libstlport.so
